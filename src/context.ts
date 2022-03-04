@@ -1,10 +1,14 @@
 import { BindingId } from "./binding-id.js";
 import { ContextElement } from "./context-element.js";
 import { TypeId, uniqueTypeId } from "./type-id.js";
-import { PlaceholderType, Type, TypeVariable } from "./type.js";
+import { PlaceholderType, Type } from "./type.js";
 
 export interface Context {
   elements: ContextElement[];
+}
+
+export function newContext(): Context {
+  return { elements: [] };
 }
 
 export function cloneContext(context: Context): Context {
@@ -63,37 +67,6 @@ export function solve(
     id: placeholder.id,
     type,
   };
-}
-
-export function contextContainsTypeVariable(
-  context: Context,
-  type: TypeVariable,
-): boolean {
-  for (const element of context.elements) {
-    if (
-      element.kind === "element:variable" &&
-      element.id.uniqueId === type.id.uniqueId
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-
-export function contextContainsPlaceholderType(
-  context: Context,
-  type: PlaceholderType,
-): boolean {
-  for (const element of context.elements) {
-    if (
-      (element.kind === "element:placeholder" ||
-        element.kind === "element:solved-placeholder") &&
-      element.id.uniqueId === type.id.uniqueId
-    ) {
-      return true;
-    }
-  }
-  return false;
 }
 
 export function insertBeforePlaceholder(

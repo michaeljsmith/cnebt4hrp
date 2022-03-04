@@ -1,11 +1,9 @@
 import {
   Context,
-  contextContainsTypeVariable,
-  contextContainsPlaceholderType,
   pushTypeVariable,
   cloneContext,
 } from "./context.js";
-import { Type } from "./type.js";
+import { PlaceholderType, Type, TypeVariable } from "./type.js";
 
 export function typeWellFormed(context: Context, type: Type): boolean {
   if (type.kind === "variable") {
@@ -22,8 +20,39 @@ export function typeWellFormed(context: Context, type: Type): boolean {
   } else if (type.kind === "forall") {
     const childContext = cloneContext(context);
     pushTypeVariable(childContext, type.quantifiedName);
-    return typeWellFormed(childContext, type);
+    return typeWellFormed(childContext, type.body);
   } else {
     throw new Error("Unreachable " + ((x: never) => x)(type));
   }
+}
+
+function contextContainsTypeVariable(
+  context: Context,
+  type: TypeVariable,
+): boolean {
+  for (const element of context.elements) {
+    if (
+      element.kind === "element:variable" &&
+      element.id.uniqueId === type.id.uniqueId
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function contextContainsPlaceholderType(
+  context: Context,
+  type: PlaceholderType,
+): boolean {
+  for (const element of context.elements) {
+    if (
+      (element.kind === "element:placeholder" ||
+        element.kind === "element:solved-placeholder") &&
+      element.id.uniqueId === type.id.uniqueId
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
