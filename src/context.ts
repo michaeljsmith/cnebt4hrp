@@ -32,7 +32,7 @@ export function pushTypeVariable(context: Context, id: TypeId): void {
   pushElement(context, { kind: "element:variable", id });
 }
 
-function maybeFindPlaceholderIndex(
+export function maybeFindPlaceholderIndex(
   context: Context,
   placeholder: PlaceholderType,
 ): number | undefined {
