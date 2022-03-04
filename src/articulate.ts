@@ -1,6 +1,6 @@
 import { makePlaceholderElement } from "./context-element.js";
-import { Context, insertBeforePlaceholder} from "./context.js";
-import { newPlaceholder, solve } from './placeholders.js';
+import { Context, insertBeforePlaceholder } from "./context.js";
+import { newPlaceholder, solvePlaceholder } from "./placeholders.js";
 import { makeFunctionType, PlaceholderType } from "./type.js";
 
 // Introduces two new placeholders to represent the input and output of a function, and define the
@@ -24,7 +24,11 @@ export function articulatePlaceholder(
     context,
     placeholder,
   );
-  solve(context, placeholder, makeFunctionType(parameterType, resultType));
+  solvePlaceholder(
+    context,
+    placeholder,
+    makeFunctionType(parameterType, resultType),
+  );
   return { parameterType, resultType };
 }
 

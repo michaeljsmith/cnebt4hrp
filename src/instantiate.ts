@@ -12,7 +12,7 @@ import {
   discardPlaceholderAndFollowing,
   pushElement,
 } from "./context.js";
-import { newPlaceholder, solve } from './placeholders.js';
+import { newPlaceholder, solvePlaceholder } from './placeholders.js';
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { typeWellFormed } from "./type-well-formed.js";
 import { FunctionType, PlaceholderType, Type } from "./type.js";
@@ -111,13 +111,13 @@ function maybeInstantiateIfMonotype(
     const canInstantiate = typeWellFormed(childContext, type);
 
     if (canInstantiate) {
-      solve(context, placeholder, type);
+      solvePlaceholder(context, placeholder, type);
       return true;
     } else if (type.kind === "placeholder") {
       // We cannot instantiate to the type, because the type is itself a placeholder which is
       // defined *afterwards*. Instead, we define the *type* (which is a placeholder) to be equal
       // to the *placeholder*.
-      solve(context, type, placeholder);
+      solvePlaceholder(context, type, placeholder);
       return true;
     }
   }

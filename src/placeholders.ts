@@ -1,6 +1,6 @@
-import { Context } from './context.js';
-import { uniqueTypeId } from './type-id.js';
-import { PlaceholderType, Type } from './type.js';
+import { Context } from "./context.js";
+import { uniqueTypeId } from "./type-id.js";
+import { PlaceholderType, Type } from "./type.js";
 
 export function maybeFindPlaceholderIndex(
   context: Context,
@@ -26,7 +26,7 @@ export function findPlaceholderIndex(
   return index;
 }
 
-export function solve(
+export function solvePlaceholder(
   context: Context,
   placeholder: PlaceholderType,
   type: Type,

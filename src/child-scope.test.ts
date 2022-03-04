@@ -2,7 +2,11 @@ import { expect } from "chai";
 import { inChildScope } from "./child-scope.js";
 import { makePlaceholderElement } from "./context-element.js";
 import { newContext, pushElement } from "./context.js";
-import { newPlaceholder, placeholderSolution, solve } from './placeholders.js';
+import {
+  newPlaceholder,
+  placeholderSolution,
+  solvePlaceholder,
+} from "./placeholders.js";
 import { uniqueTypeId } from "./type-id.js";
 import { Void } from "./type.js";
 
@@ -29,7 +33,7 @@ describe("childScope", function () {
     const placeholder = newPlaceholder("foo");
     pushElement(context, makePlaceholderElement(placeholder.id));
     inChildScope(context, () => {
-      solve(context, placeholder, Void);
+      solvePlaceholder(context, placeholder, Void);
     });
     expect(placeholderSolution(context, placeholder)).eq(Void);
   });
