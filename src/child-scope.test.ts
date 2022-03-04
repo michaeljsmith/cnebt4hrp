@@ -1,13 +1,8 @@
 import { expect } from "chai";
 import { inChildScope } from "./child-scope.js";
 import { makePlaceholderElement } from "./context-element.js";
-import {
-  newContext,
-  newPlaceholder,
-  placeholderSolution,
-  pushElement,
-  solve,
-} from "./context.js";
+import { newContext, pushElement } from "./context.js";
+import { newPlaceholder, placeholderSolution, solve } from './placeholders.js';
 import { uniqueTypeId } from "./type-id.js";
 import { Void } from "./type.js";
 

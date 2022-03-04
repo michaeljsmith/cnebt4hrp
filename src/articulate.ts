@@ -1,5 +1,6 @@
 import { makePlaceholderElement } from "./context-element.js";
-import { Context, insertBeforePlaceholder, newPlaceholder, solve } from "./context.js";
+import { Context, insertBeforePlaceholder} from "./context.js";
+import { newPlaceholder, solve } from './placeholders.js';
 import { makeFunctionType, PlaceholderType } from "./type.js";
 
 // Introduces two new placeholders to represent the input and output of a function, and define the

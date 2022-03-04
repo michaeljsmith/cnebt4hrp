@@ -1,4 +1,5 @@
-import { Context, placeholderSolution } from "./context.js";
+import { Context } from "./context.js";
+import { placeholderSolution } from './placeholders.js';
 import { Type } from "./type.js";
 
 export function applyContext(context: Context, type: Type): Type {

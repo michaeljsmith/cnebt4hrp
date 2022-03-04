@@ -10,10 +10,9 @@ import {
   commitContext,
   Context,
   discardPlaceholderAndFollowing,
-  newPlaceholder,
   pushElement,
-  solve,
 } from "./context.js";
+import { newPlaceholder, solve } from './placeholders.js';
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { typeWellFormed } from "./type-well-formed.js";
 import { FunctionType, PlaceholderType, Type } from "./type.js";

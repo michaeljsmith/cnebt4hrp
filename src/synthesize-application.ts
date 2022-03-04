@@ -5,10 +5,10 @@ import {
   cloneContext,
   commitContext,
   Context,
-  newPlaceholder,
   pushElement,
 } from "./context.js";
 import { Expression } from "./expression.js";
+import { newPlaceholder } from './placeholders.js';
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { Type } from "./type.js";
 

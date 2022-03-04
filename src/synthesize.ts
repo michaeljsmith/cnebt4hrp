@@ -10,10 +10,10 @@ import {
   commitContext,
   Context,
   findVariableType,
-  newPlaceholder,
   pushElement,
 } from "./context.js";
 import { Expression } from "./expression.js";
+import { newPlaceholder } from './placeholders.js';
 import { synthesizeApplication } from "./synthesize-application.js";
 import { typeWellFormed } from "./type-well-formed.js";
 import { makeFunctionType, PlaceholderType, Type, Void } from "./type.js";

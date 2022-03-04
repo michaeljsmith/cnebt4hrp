@@ -1,12 +1,7 @@
 import { expect } from "chai";
 import { makePlaceholderElement } from "./context-element.js";
-import {
-  newContext,
-  newPlaceholder,
-  pushElement,
-  pushTypeVariable,
-  solve,
-} from "./context.js";
+import { newContext, pushElement, pushTypeVariable } from "./context.js";
+import { newPlaceholder, solve } from './placeholders.js';
 import { uniqueTypeId } from "./type-id.js";
 import { typeWellFormed } from "./type-well-formed.js";
 import {
