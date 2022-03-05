@@ -1,10 +1,7 @@
 import { applyContext } from "./apply-context.js";
 import { check } from "./check.js";
 import { inChildScope } from "./child-scope.js";
-import {
-  makeAnnotationElement,
-  makePlaceholderElement,
-} from "./context-element.js";
+import { makeAnnotationElement } from "./context-element.js";
 import {
   cloneContext,
   commitContext,
@@ -13,10 +10,10 @@ import {
   pushElement,
 } from "./context.js";
 import { Expression } from "./expression.js";
-import { newPlaceholder } from './placeholders.js';
+import { introducePlaceholder } from "./placeholders.js";
 import { synthesizeApplication } from "./synthesize-application.js";
 import { typeWellFormed } from "./type-well-formed.js";
-import { makeFunctionType, PlaceholderType, Type, Void } from "./type.js";
+import { makeFunctionType, Type, Void } from "./type.js";
 
 // Determines the type of an expression.
 //
@@ -56,11 +53,11 @@ export function synthesize(
     // annotation element and everything after it, but leave the two placeholders as they appear in
     // the resulting type.
     const childContext = cloneContext(context);
-    const argumentPlaceholder = introduceLambdaPlaceholder(
+    const argumentPlaceholder = introducePlaceholder(
       childContext,
       expression.argumentId.label,
     );
-    const resultPlaceholder = introduceLambdaPlaceholder(
+    const resultPlaceholder = introducePlaceholder(
       childContext,
       expression.argumentId.label + "-result",
     );
@@ -99,14 +96,4 @@ export function synthesize(
   } else {
     throw new Error("Unreachable " + ((x: never) => x)(expression));
   }
-}
-
-function introduceLambdaPlaceholder(
-  context: Context,
-  label: string,
-): PlaceholderType {
-  const placeholder = newPlaceholder(label);
-  const placeholderElement = makePlaceholderElement(placeholder.id);
-  pushElement(context, placeholderElement);
-  return placeholder;
 }

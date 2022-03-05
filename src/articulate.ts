@@ -1,6 +1,10 @@
-import { makePlaceholderElement } from "./context-element.js";
-import { Context, insertBeforePlaceholder } from "./context.js";
-import { newPlaceholder, solvePlaceholder } from "./placeholders.js";
+import { Context } from "./context.js";
+import {
+  findPlaceholderIndex,
+  newPlaceholder,
+  placeholderElement,
+  solvePlaceholder,
+} from "./placeholders.js";
 import { makeFunctionType, PlaceholderType } from "./type.js";
 
 // Introduces two new placeholders to represent the input and output of a function, and define the
@@ -40,7 +44,15 @@ function introduceArticulatingPlaceholder(
   const placeholder = newPlaceholder(
     existingPlaceholder.id.label + labelSuffix,
   );
-  const placeholderElement = makePlaceholderElement(placeholder.id);
-  insertBeforePlaceholder(context, placeholderElement, existingPlaceholder);
+  insertPlaceholderBeforePlaceholder(context, placeholder, existingPlaceholder);
   return placeholder;
+}
+
+function insertPlaceholderBeforePlaceholder(
+  context: Context,
+  placeholder: PlaceholderType,
+  position: PlaceholderType,
+): void {
+  const index = findPlaceholderIndex(context, position);
+  context.elements.splice(index, 0, placeholderElement(placeholder));
 }

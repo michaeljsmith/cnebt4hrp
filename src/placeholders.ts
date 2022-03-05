@@ -1,4 +1,5 @@
-import { Context } from "./context.js";
+import { makePlaceholderElement, PlaceholderElement } from './context-element.js';
+import { Context, pushElement } from "./context.js";
 import { uniqueTypeId } from "./type-id.js";
 import { PlaceholderType, Type } from "./type.js";
 
@@ -44,6 +45,23 @@ export function newPlaceholder(label: string): PlaceholderType {
     kind: "placeholder",
     id: uniqueTypeId(label),
   };
+}
+
+export function placeholderElement(placeholder: PlaceholderType): PlaceholderElement {
+  return makePlaceholderElement(placeholder.id);
+}
+
+export function pushPlaceholder(context: Context, placeholder: PlaceholderType): void {
+  pushElement(context, placeholderElement(placeholder));
+}
+
+export function introducePlaceholder(
+  context: Context,
+  label: string,
+): PlaceholderType {
+  const placeholder = newPlaceholder(label);
+  pushPlaceholder(context, placeholder);
+  return placeholder;
 }
 
 export function placeholderSolution(

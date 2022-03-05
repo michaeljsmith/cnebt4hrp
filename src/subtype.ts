@@ -1,9 +1,6 @@
 import { applyContext } from "./apply-context.js";
 import { inChildScope } from "./child-scope.js";
-import {
-  makePlaceholderElement,
-  makeVariableElement,
-} from "./context-element.js";
+import { makeVariableElement } from "./context-element.js";
 import {
   cloneContext,
   commitContext,
@@ -11,7 +8,7 @@ import {
   pushElement,
 } from "./context.js";
 import { instantiateSubtype, instantiateSupertype } from "./instantiate.js";
-import { newPlaceholder } from './placeholders.js';
+import { introducePlaceholder } from "./placeholders.js";
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { typeReferences } from "./type-references.js";
 import { Type } from "./type.js";
@@ -74,8 +71,10 @@ export function isSubtype(
     // successful, may define other placeholders in the context. We then discard the placeholder and
     // other variables that were added.
     const success = inChildScope(childContext, () => {
-      const childPlaceholder = newPlaceholder(subType.quantifiedName.label);
-      pushElement(childContext, makePlaceholderElement(childPlaceholder.id));
+      const childPlaceholder = introducePlaceholder(
+        childContext,
+        subType.quantifiedName.label,
+      );
 
       // Substitute the placeholder for the quantified variable in the quantified expression.
       const updatedBody = substituteTypeReferences(

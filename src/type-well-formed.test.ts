@@ -1,7 +1,11 @@
 import { expect } from "chai";
-import { makePlaceholderElement } from "./context-element.js";
-import { newContext, pushElement, pushTypeVariable } from "./context.js";
-import { newPlaceholder, solvePlaceholder } from "./placeholders.js";
+import { newContext, pushTypeVariable } from "./context.js";
+import {
+  introducePlaceholder,
+  newPlaceholder,
+  pushPlaceholder,
+  solvePlaceholder,
+} from "./placeholders.js";
 import { uniqueTypeId } from "./type-id.js";
 import { typeWellFormed } from "./type-well-formed.js";
 import {
@@ -36,7 +40,7 @@ describe("typeWellFormed", function () {
     const placeholder = newPlaceholder("foo");
 
     const context = newContext();
-    pushElement(context, makePlaceholderElement(placeholder.id));
+    pushPlaceholder(context, placeholder);
     expect(typeWellFormed(context, placeholder)).true;
   });
 
@@ -44,7 +48,7 @@ describe("typeWellFormed", function () {
     const placeholder = newPlaceholder("foo");
 
     const context = newContext();
-    pushElement(context, makePlaceholderElement(placeholder.id));
+    pushPlaceholder(context, placeholder);
     solvePlaceholder(context, placeholder, Void);
     expect(typeWellFormed(context, placeholder)).true;
   });
@@ -53,7 +57,7 @@ describe("typeWellFormed", function () {
     const placeholder = newPlaceholder("foo");
 
     const context = newContext();
-    pushElement(context, makePlaceholderElement(uniqueTypeId("bar")));
+    introducePlaceholder(context, "bar");
     expect(typeWellFormed(context, placeholder)).false;
   });
 

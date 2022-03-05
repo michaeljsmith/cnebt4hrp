@@ -1,10 +1,7 @@
 import { applyContext } from "./apply-context.js";
 import { articulatePlaceholder } from "./articulate.js";
 import { inChildScope } from "./child-scope.js";
-import {
-  makePlaceholderElement,
-  makeVariableElement,
-} from "./context-element.js";
+import { makeVariableElement } from "./context-element.js";
 import {
   cloneContext,
   commitContext,
@@ -12,7 +9,11 @@ import {
   discardPlaceholderAndFollowing,
   pushElement,
 } from "./context.js";
-import { newPlaceholder, solvePlaceholder } from './placeholders.js';
+import {
+  newPlaceholder,
+  placeholderElement,
+  solvePlaceholder,
+} from "./placeholders.js";
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { typeWellFormed } from "./type-well-formed.js";
 import { FunctionType, PlaceholderType, Type } from "./type.js";
@@ -77,7 +78,7 @@ export function instantiateSupertype(
     // are retained.
     const success = inChildScope(childContext, () => {
       const childPlaceholder = newPlaceholder(type.quantifiedName.label);
-      pushElement(childContext, makePlaceholderElement(childPlaceholder.id));
+      pushElement(childContext, placeholderElement(childPlaceholder));
 
       // Substitute the placeholder for the quantified variable in the quantified expression.
       const updatedBody = substituteTypeReferences(

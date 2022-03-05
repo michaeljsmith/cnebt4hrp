@@ -33,15 +33,6 @@ export function pushTypeVariable(context: Context, id: TypeId): void {
   pushElement(context, { kind: "element:variable", id });
 }
 
-export function insertBeforePlaceholder(
-  context: Context,
-  element: ContextElement,
-  position: PlaceholderType,
-): void {
-  const index = findPlaceholderIndex(context, position);
-  context.elements.splice(index, 0, element);
-}
-
 export function discardPlaceholderAndFollowing(
   context: Context,
   placeholder: PlaceholderType,

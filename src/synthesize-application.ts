@@ -1,14 +1,8 @@
 import { articulatePlaceholder } from "./articulate.js";
 import { check } from "./check.js";
-import { makePlaceholderElement } from "./context-element.js";
-import {
-  cloneContext,
-  commitContext,
-  Context,
-  pushElement,
-} from "./context.js";
+import { cloneContext, commitContext, Context } from "./context.js";
 import { Expression } from "./expression.js";
-import { newPlaceholder } from './placeholders.js';
+import { introducePlaceholder } from "./placeholders.js";
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { Type } from "./type.js";
 
@@ -41,8 +35,10 @@ export function synthesizeApplication(
 
     // Unlike other places where placeholders are introduced, we don't discard it once it is
     // determined. This is because the function result is likely to depend on it.
-    const placeholder = newPlaceholder(functionType.quantifiedName.label);
-    pushElement(childContext, makePlaceholderElement(placeholder.id));
+    const placeholder = introducePlaceholder(
+      childContext,
+      functionType.quantifiedName.label,
+    );
 
     // Substitute the placeholder for the quantified variable in the quantified expression.
     const updatedFunctionType = substituteTypeReferences(
