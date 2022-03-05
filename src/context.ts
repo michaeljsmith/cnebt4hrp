@@ -1,8 +1,7 @@
 import { BindingId } from "./binding-id.js";
 import { ContextElement } from "./context-element.js";
-import { findPlaceholderIndex } from "./placeholders.js";
 import { TypeId } from "./type-id.js";
-import { PlaceholderType, Type } from "./type.js";
+import { Type } from "./type.js";
 
 export interface Context {
   elements: ContextElement[];
@@ -31,14 +30,6 @@ export function pushElement(context: Context, element: ContextElement): void {
 
 export function pushTypeVariable(context: Context, id: TypeId): void {
   pushElement(context, { kind: "element:variable", id });
-}
-
-export function discardPlaceholderAndFollowing(
-  context: Context,
-  placeholder: PlaceholderType,
-): void {
-  const index = findPlaceholderIndex(context, placeholder);
-  context.elements.splice(index);
 }
 
 export function findVariableType(

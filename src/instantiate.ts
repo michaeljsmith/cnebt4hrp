@@ -6,10 +6,10 @@ import {
   cloneContext,
   commitContext,
   Context,
-  discardPlaceholderAndFollowing,
   pushElement,
 } from "./context.js";
 import {
+  findPlaceholderIndex,
   newPlaceholder,
   placeholderElement,
   solvePlaceholder,
@@ -163,4 +163,12 @@ function instantiateFunction(
     commitContext(context, childContext);
   }
   return success;
+}
+
+function discardPlaceholderAndFollowing(
+  context: Context,
+  placeholder: PlaceholderType,
+): void {
+  const index = findPlaceholderIndex(context, placeholder);
+  context.elements.splice(index);
 }
