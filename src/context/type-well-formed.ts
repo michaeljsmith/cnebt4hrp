@@ -1,4 +1,4 @@
-import { makeTypeVariable, PlaceholderType, Type } from "../types/type.js";
+import { PlaceholderType, Type } from "../types/type.js";
 import { cloneContext, Context } from "./context.js";
 import { declareTypeVariable, typeVariableDeclared } from "./type-variables.js";
 
@@ -16,7 +16,7 @@ export function typeWellFormed(context: Context, type: Type): boolean {
     );
   } else if (type.kind === "forall") {
     const childContext = cloneContext(context);
-    declareTypeVariable(childContext, makeTypeVariable(type.quantifiedName));
+    declareTypeVariable(childContext, type.quantifiedName);
     return typeWellFormed(childContext, type.body);
   } else {
     throw new Error("Unreachable " + ((x: never) => x)(type));

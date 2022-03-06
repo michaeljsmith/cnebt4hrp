@@ -25,7 +25,7 @@ describe("typeWellFormed", function () {
     const typeVariable = makeTypeVariable(uniqueTypeId("foo"));
 
     const context = newContext();
-    declareTypeVariable(context, makeTypeVariable(typeVariable.id));
+    declareTypeVariable(context, typeVariable.id);
     expect(typeWellFormed(context, typeVariable)).true;
   });
 
@@ -33,7 +33,7 @@ describe("typeWellFormed", function () {
     const typeVariable = makeTypeVariable(uniqueTypeId("foo"));
 
     const context = newContext();
-    declareTypeVariable(context, makeTypeVariable(uniqueTypeId("bar")));
+    declareTypeVariable(context, uniqueTypeId("bar"));
     expect(typeWellFormed(context, typeVariable)).false;
   });
 

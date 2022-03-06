@@ -7,7 +7,7 @@ import { instantiateSubtype } from "./instantiation/instantiate-subtype.js";
 import { instantiateSupertype } from "./instantiation/instantiate-supertype";
 import { substituteTypeReferences } from "./types/substitute-type-references.js";
 import { typeReferences } from "./types/type-references.js";
-import { makeTypeVariable, Type } from "./types/type.js";
+import { Type } from "./types/type.js";
 
 // Checks whether one type is a subtype of another.
 //
@@ -96,10 +96,7 @@ export function isSubtype(
     // To check this, we push the quantified variable into the context and then instantiate the body
     // of the forall. The quantified variable and any other new variables are then discarded.
     const success = inChildScope(childContext, () => {
-      declareTypeVariable(
-        childContext,
-        makeTypeVariable(superType.quantifiedName),
-      );
+      declareTypeVariable(childContext, superType.quantifiedName);
       return isSubtype(childContext, subType, superType.body);
     });
     if (success) {

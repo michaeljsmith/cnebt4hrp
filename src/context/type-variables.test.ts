@@ -3,7 +3,7 @@ import { uniqueTypeId } from "../types/type-id.js";
 import { makeTypeVariable } from "../types/type.js";
 import { newContext } from "./context.js";
 import { introducePlaceholder } from "./placeholders.js";
-import { declareTypeVariable, typeVariableDeclared } from "./type-variables.js";
+import { pushTypeVariable, typeVariableDeclared } from "./type-variables.js";
 
 describe("typeVariables", function () {
   it("can't find type in empty context", function () {
@@ -15,7 +15,7 @@ describe("typeVariables", function () {
   it("finds type variable", function () {
     const context = newContext();
     const typeVariable = makeTypeVariable(uniqueTypeId("foo"));
-    declareTypeVariable(context, typeVariable);
+    pushTypeVariable(context, typeVariable);
     expect(typeVariableDeclared(context, typeVariable)).true;
   });
 
