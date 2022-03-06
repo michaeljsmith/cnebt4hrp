@@ -7,8 +7,8 @@ import {
   pushElement,
 } from "../context/context.js";
 import { PlaceholderType, Type } from "../types/type.js";
-import { instantiateFunction } from "./instantiate-function";
-import { maybeInstantiateIfMonotype } from "./instantiate-monotype";
+import { instantiateFunction } from "./instantiate-function.js";
+import { maybeInstantiateIfMonotype } from "./instantiate-monotype.js";
 
 // Tries to resolve a placeholder type to a monotype that is well-formed in the context, which is
 // a subtype of the given type.

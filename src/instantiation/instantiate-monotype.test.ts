@@ -35,11 +35,7 @@ describe("instantiateMonotype", function () {
     const b = declareTypeVariable(context, uniqueTypeId("b"));
     const placeholder = introducePlaceholder(context, "foo");
     const target = makeFunctionType(a, b);
-    const result = maybeInstantiateIfMonotype(
-      context,
-      placeholder,
-      target,
-    );
+    const result = maybeInstantiateIfMonotype(context, placeholder, target);
     expect(result).true;
     expect(placeholderSolution(context, placeholder)).eq(target);
   });
@@ -50,11 +46,7 @@ describe("instantiateMonotype", function () {
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const b = declareTypeVariable(context, uniqueTypeId("b"));
     const target = makeFunctionType(a, b);
-    const result = maybeInstantiateIfMonotype(
-      context,
-      placeholder,
-      target,
-    );
+    const result = maybeInstantiateIfMonotype(context, placeholder, target);
     expect(result).false;
     expect(placeholderSolution(context, placeholder)).undefined;
   });

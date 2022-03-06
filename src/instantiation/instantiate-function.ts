@@ -2,8 +2,8 @@ import { articulatePlaceholder } from "../articulate.js";
 import { applyContext } from "../context/apply-context.js";
 import { cloneContext, commitContext, Context } from "../context/context.js";
 import { FunctionType, PlaceholderType } from "../types/type.js";
-import { instantiateSubtype } from "./instantiate-subtype";
-import { instantiateSupertype } from "./instantiate-supertype";
+import { instantiateSubtype } from "./instantiate-subtype.js";
+import { instantiateSupertype } from "./instantiate-supertype.js";
 
 export function instantiateFunction(
   variance: "covariant" | "contravariant",

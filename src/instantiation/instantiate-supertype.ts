@@ -8,8 +8,8 @@ import {
 import { placeholderElement } from "../context/placeholders.js";
 import { substituteTypeReferences } from "../types/substitute-type-references.js";
 import { newPlaceholder, PlaceholderType, Type } from "../types/type.js";
-import { instantiateFunction } from "./instantiate-function";
-import { maybeInstantiateIfMonotype } from "./instantiate-monotype";
+import { instantiateFunction } from "./instantiate-function.js";
+import { maybeInstantiateIfMonotype } from "./instantiate-monotype.js";
 
 // Tries to resolve a placeholder type to a monotype that is well-formed in the context, which is
 // a subtype of the given type.
