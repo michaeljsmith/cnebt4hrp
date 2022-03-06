@@ -1,18 +1,12 @@
-import { applyContext } from "./context/apply-context.js";
 import { check } from "./check.js";
+import { applyContext } from "./context/apply-context.js";
 import { inChildScope } from "./context/child-scope.js";
-import { makeAnnotationElement } from "./context/context-element.js";
-import {
-  cloneContext,
-  commitContext,
-  Context,
-  findVariableType,
-  pushElement,
-} from "./context/context.js";
-import { Expression } from "./expressions/expression.js";
+import { cloneContext, commitContext, Context } from "./context/context.js";
 import { introducePlaceholder } from "./context/placeholders.js";
-import { synthesizeApplication } from "./synthesize-application.js";
+import { bindType, lookupBindingType } from "./context/type-bindings.js";
 import { typeWellFormed } from "./context/type-well-formed.js";
+import { Expression } from "./expressions/expression.js";
+import { synthesizeApplication } from "./synthesize-application.js";
 import { makeFunctionType, Type, Void } from "./types/type.js";
 
 // Determines the type of an expression.
@@ -44,7 +38,7 @@ export function synthesize(
   } else if (expression.kind === "expression:reference") {
     // If the expression is a reference, check whether the context contains a type for the
     // variable.
-    return findVariableType(context, expression.id);
+    return lookupBindingType(context, expression.id);
   } else if (expression.kind === "expression:lambda") {
     // If the expression is a lambda, the result will be a function type, but we need to determine
     // the argument and result. To do so, we add two new placeholders, as well as an annotation
@@ -62,10 +56,7 @@ export function synthesize(
       expression.argumentId.label + "-result",
     );
     const success = inChildScope(childContext, () => {
-      pushElement(
-        childContext,
-        makeAnnotationElement(expression.argumentId, argumentPlaceholder),
-      );
+      bindType(childContext, expression.argumentId, argumentPlaceholder);
       return check(childContext, resultPlaceholder, expression.expression);
     });
     if (success) {

@@ -1,15 +1,13 @@
 import { applyContext } from "./context/apply-context.js";
 import { inChildScope } from "./context/child-scope.js";
-import {
-  makeAnnotationElement,
-  makeVariableElement,
-} from "./context/context-element.js";
+import { makeVariableElement } from "./context/context-element.js";
 import {
   cloneContext,
   commitContext,
   Context,
   pushElement,
 } from "./context/context.js";
+import { bindType } from "./context/type-bindings.js";
 import { Expression } from "./expressions/expression.js";
 import { isSubtype } from "./subtype.js";
 import { synthesize } from "./synthesize.js";
@@ -56,10 +54,7 @@ export function check(
     // annotation and any other additions that are added will be discarded, but modifications to
     // the rest of the context will be retained.
     const success = inChildScope(childContext, () => {
-      pushElement(
-        childContext,
-        makeAnnotationElement(expression.argumentId, type.parameter),
-      );
+      bindType(childContext, expression.argumentId, type.parameter);
       return check(childContext, type.result, expression.expression);
     });
     if (success) {

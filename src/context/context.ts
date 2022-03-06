@@ -1,7 +1,5 @@
-import { BindingId } from "../expressions/binding-id.js";
-import { ContextElement } from "./context-element.js";
 import { TypeId } from "../types/type-id.js";
-import { Type } from "../types/type.js";
+import { ContextElement } from "./context-element.js";
 
 export interface Context {
   elements: ContextElement[];
@@ -30,19 +28,4 @@ export function pushElement(context: Context, element: ContextElement): void {
 
 export function pushTypeVariable(context: Context, id: TypeId): void {
   pushElement(context, { kind: "element:variable", id });
-}
-
-export function findVariableType(
-  context: Context,
-  bindingId: BindingId,
-): Type | undefined {
-  for (const element of context.elements) {
-    if (
-      element.kind === "element:annotation" &&
-      element.bindingId.uniqueId === bindingId.uniqueId
-    ) {
-      return element.type;
-    }
-    return undefined;
-  }
 }
