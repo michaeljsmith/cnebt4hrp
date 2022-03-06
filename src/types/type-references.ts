@@ -15,7 +15,7 @@ export function typeReferences(
       typeReferences(type.parameter, placeholder) ||
       typeReferences(type.result, placeholder)
     );
-  } else if (type.kind === 'forall') {
+  } else if (type.kind === "forall") {
     return typeReferences(type.body, placeholder);
   } else {
     throw new Error("Unreachable " + ((x: never) => x)(type));

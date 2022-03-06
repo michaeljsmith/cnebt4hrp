@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import { Void } from "../types/type.js";
 import { newContext } from "./context.js";
 import {
   findPlaceholderIndex,
@@ -6,7 +7,6 @@ import {
   placeholderSolution,
   solvePlaceholder,
 } from "./placeholders.js";
-import { Void } from "../types/type.js";
 
 describe("placeholders", function () {
   it("finds placeholder", function () {

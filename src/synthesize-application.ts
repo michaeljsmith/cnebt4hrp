@@ -1,8 +1,8 @@
 import { articulatePlaceholder } from "./articulate.js";
 import { check } from "./check.js";
 import { cloneContext, commitContext, Context } from "./context/context.js";
-import { Expression } from "./expressions/expression.js";
 import { introducePlaceholder } from "./context/placeholders.js";
+import { Expression } from "./expressions/expression.js";
 import { substituteTypeReferences } from "./types/substitute-type-references.js";
 import { Type } from "./types/type.js";
 

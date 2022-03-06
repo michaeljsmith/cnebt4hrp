@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { uniqueBindingId } from "../expressions/binding-id.js";
-import { Void } from '../types/type.js';
+import { Void } from "../types/type.js";
 import { newContext } from "./context.js";
-import { introducePlaceholder } from './placeholders.js';
+import { introducePlaceholder } from "./placeholders.js";
 import { bindType, lookupBindingType } from "./type-bindings.js";
 
 describe("typeBindings", function () {

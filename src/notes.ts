@@ -1,4 +1,6 @@
-export function instanceOf<T>(): T {return undefined as unknown as T}
+export function instanceOf<T>(): T {
+  return undefined as unknown as T;
+}
 
 // const f: (x: string) => void =
 //     instanceOf<<T>(x: T) => void>();

@@ -1,13 +1,10 @@
 import { expect } from "chai";
+import { uniqueTypeId } from "../types/type-id.js";
+import { newPlaceholder, Void } from "../types/type.js";
 import { inChildScope } from "./child-scope.js";
 import { makePlaceholderElement } from "./context-element.js";
 import { newContext, pushElement } from "./context.js";
-import {
-  placeholderSolution,
-  solvePlaceholder,
-} from "./placeholders.js";
-import { uniqueTypeId } from "../types/type-id.js";
-import { newPlaceholder, Void } from "../types/type.js";
+import { placeholderSolution, solvePlaceholder } from "./placeholders.js";
 
 describe("childScope", function () {
   it("returns body result", function () {

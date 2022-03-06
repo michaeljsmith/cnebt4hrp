@@ -1,5 +1,5 @@
-import { MarkerElement, newMarkerElement } from './context-element.js';
-import { Context, pushElement } from './context.js';
+import { MarkerElement, newMarkerElement } from "./context-element.js";
+import { Context, pushElement } from "./context.js";
 
 // Executes `fn` inside a new child scope.
 //
@@ -8,10 +8,7 @@ import { Context, pushElement } from './context.js';
 // variables will be discarded.
 //
 // *However*, any changes to pre-defined variables will be retained.
-export function inChildScope<T>(
-  context: Context,
-  fn: () => T,
-): T {
+export function inChildScope<T>(context: Context, fn: () => T): T {
   const marker = enterForAllScope(context);
   try {
     return fn();
@@ -41,8 +38,7 @@ function maybeFindMarkerIndex(
   id: number,
 ): number | undefined {
   const index = context.elements.findIndex(
-    (element) =>
-      element.kind === "element:marker" && element.id === id,
+    (element) => element.kind === "element:marker" && element.id === id,
   );
   return index == -1 ? undefined : index;
 }

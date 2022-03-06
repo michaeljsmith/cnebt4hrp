@@ -1,5 +1,5 @@
-import { BindingId } from "./binding-id.js";
 import { Type } from "../types/type.js";
+import { BindingId } from "./binding-id.js";
 
 export type Expression =
   | AnnotationExpression

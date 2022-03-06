@@ -1,6 +1,6 @@
-import { Context } from "./context.js";
-import { placeholderSolution } from './placeholders.js';
 import { Type } from "../types/type.js";
+import { Context } from "./context.js";
+import { placeholderSolution } from "./placeholders.js";
 
 export function applyContext(context: Context, type: Type): Type {
   if (type.kind === "variable") {

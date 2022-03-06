@@ -1,7 +1,14 @@
 import { expect } from "chai";
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { uniqueTypeId } from "./type-id.js";
-import { makeForAllType, makeFunctionType, makeTypeVariable, newPlaceholder, Type, Void } from "./type.js";
+import {
+  makeForAllType,
+  makeFunctionType,
+  makeTypeVariable,
+  newPlaceholder,
+  Type,
+  Void,
+} from "./type.js";
 
 describe("subsituteTypeReferences", function () {
   const existingVariableId = uniqueTypeId("foo");
@@ -48,7 +55,9 @@ describe("subsituteTypeReferences", function () {
 
   it("recurses to forall body", function () {
     const quantifiedVariableId = uniqueTypeId("x");
-    const result = execute(makeForAllType(quantifiedVariableId, existingVariable));
+    const result = execute(
+      makeForAllType(quantifiedVariableId, existingVariable),
+    );
     expect(result).deep.eq(makeForAllType(quantifiedVariableId, placeholder));
   });
 });

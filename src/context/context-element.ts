@@ -1,4 +1,4 @@
-import { BindingId } from '../expressions/binding-id.js';
+import { BindingId } from "../expressions/binding-id.js";
 import { TypeId } from "../types/type-id.js";
 import { Type } from "../types/type.js";
 
@@ -30,7 +30,10 @@ export interface AnnotationElement {
   readonly type: Type;
 }
 
-export function makeAnnotationElement(bindingId: BindingId, type: Type): AnnotationElement {
+export function makeAnnotationElement(
+  bindingId: BindingId,
+  type: Type,
+): AnnotationElement {
   return {
     kind: "element:annotation",
     bindingId,

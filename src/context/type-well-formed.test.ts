@@ -1,12 +1,5 @@
 import { expect } from "chai";
-import { newContext } from "./context.js";
-import {
-  introducePlaceholder,
-  pushPlaceholder,
-  solvePlaceholder,
-} from "./placeholders.js";
 import { uniqueTypeId } from "../types/type-id.js";
-import { typeWellFormed } from "./type-well-formed.js";
 import {
   makeForAllType,
   makeFunctionType,
@@ -14,7 +7,14 @@ import {
   newPlaceholder,
   Void,
 } from "../types/type.js";
-import { declareTypeVariable } from './type-variables.js';
+import { newContext } from "./context.js";
+import {
+  introducePlaceholder,
+  pushPlaceholder,
+  solvePlaceholder,
+} from "./placeholders.js";
+import { declareTypeVariable } from "./type-variables.js";
+import { typeWellFormed } from "./type-well-formed.js";
 
 describe("typeWellFormed", function () {
   it("passes Void", function () {
