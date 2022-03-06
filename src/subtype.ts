@@ -1,17 +1,12 @@
 import { applyContext } from "./context/apply-context.js";
 import { inChildScope } from "./context/child-scope.js";
-import { makeVariableElement } from "./context/context-element.js";
-import {
-  cloneContext,
-  commitContext,
-  Context,
-  pushElement,
-} from "./context/context.js";
-import { instantiateSubtype, instantiateSupertype } from "./instantiate.js";
+import { cloneContext, commitContext, Context } from "./context/context.js";
 import { introducePlaceholder } from "./context/placeholders.js";
+import { declareTypeVariable } from "./context/type-variables.js";
+import { instantiateSubtype, instantiateSupertype } from "./instantiate.js";
 import { substituteTypeReferences } from "./types/substitute-type-references.js";
-import { typeReferences } from './types/type-references.js';
-import { Type } from "./types/type.js";
+import { typeReferences } from "./types/type-references.js";
+import { makeTypeVariable, Type } from "./types/type.js";
 
 // Checks whether one type is a subtype of another.
 //
@@ -100,7 +95,7 @@ export function isSubtype(
     // To check this, we push the quantified variable into the context and then instantiate the body
     // of the forall. The quantified variable and any other new variables are then discarded.
     const success = inChildScope(childContext, () => {
-      pushElement(childContext, makeVariableElement(superType.quantifiedName));
+      declareTypeVariable(childContext, makeTypeVariable(superType.quantifiedName));
       return isSubtype(childContext, subType, superType.body);
     });
     if (success) {

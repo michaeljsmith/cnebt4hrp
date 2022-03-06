@@ -1,4 +1,3 @@
-import { TypeId } from "../types/type-id.js";
 import { ContextElement } from "./context-element.js";
 
 export interface Context {
@@ -24,8 +23,4 @@ export function commitContext(
 
 export function pushElement(context: Context, element: ContextElement): void {
   context.elements.push(element);
-}
-
-export function pushTypeVariable(context: Context, id: TypeId): void {
-  pushElement(context, { kind: "element:variable", id });
 }

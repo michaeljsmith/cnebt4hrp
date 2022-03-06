@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { newContext, pushTypeVariable } from "./context.js";
+import { newContext } from "./context.js";
 import {
   introducePlaceholder,
   pushPlaceholder,
@@ -14,6 +14,7 @@ import {
   newPlaceholder,
   Void,
 } from "../types/type.js";
+import { declareTypeVariable } from './type-variables.js';
 
 describe("typeWellFormed", function () {
   it("passes Void", function () {
@@ -24,7 +25,7 @@ describe("typeWellFormed", function () {
     const typeVariable = makeTypeVariable(uniqueTypeId("foo"));
 
     const context = newContext();
-    pushTypeVariable(context, typeVariable.id);
+    declareTypeVariable(context, makeTypeVariable(typeVariable.id));
     expect(typeWellFormed(context, typeVariable)).true;
   });
 
@@ -32,7 +33,7 @@ describe("typeWellFormed", function () {
     const typeVariable = makeTypeVariable(uniqueTypeId("foo"));
 
     const context = newContext();
-    pushTypeVariable(context, uniqueTypeId("bar"));
+    declareTypeVariable(context, makeTypeVariable(uniqueTypeId("bar")));
     expect(typeWellFormed(context, typeVariable)).false;
   });
 

@@ -5,7 +5,7 @@ import { newContext } from "./context.js";
 import { introducePlaceholder } from './placeholders.js';
 import { bindType, lookupBindingType } from "./type-bindings.js";
 
-describe("lookupBindingType", function () {
+describe("typeBindings", function () {
   it("returns undefined for empty context", function () {
     const context = newContext();
     expect(lookupBindingType(context, uniqueBindingId("foo"))).undefined;

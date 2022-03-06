@@ -1,17 +1,12 @@
 import { applyContext } from "./context/apply-context.js";
 import { inChildScope } from "./context/child-scope.js";
-import { makeVariableElement } from "./context/context-element.js";
-import {
-  cloneContext,
-  commitContext,
-  Context,
-  pushElement,
-} from "./context/context.js";
+import { cloneContext, commitContext, Context } from "./context/context.js";
 import { bindType } from "./context/type-bindings.js";
+import { declareTypeVariable } from "./context/type-variables.js";
 import { Expression } from "./expressions/expression.js";
 import { isSubtype } from "./subtype.js";
 import { synthesize } from "./synthesize.js";
-import { Type } from "./types/type.js";
+import { makeTypeVariable, Type } from "./types/type.js";
 
 // Checks an expression against a specified type.
 //
@@ -36,7 +31,7 @@ export function check(
     // variable and any other additions that are added will be discarded, but modifications to
     // the rest of the context will be retained.
     const success = inChildScope(childContext, () => {
-      pushElement(childContext, makeVariableElement(type.quantifiedName));
+      declareTypeVariable(childContext, makeTypeVariable(type.quantifiedName));
       return check(childContext, type.body, expression);
     });
     if (success) {
