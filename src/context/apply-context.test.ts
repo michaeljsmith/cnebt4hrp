@@ -2,13 +2,13 @@ import { expect } from "chai";
 import { applyContext } from "./apply-context.js";
 import { newContext } from "./context.js";
 import { introducePlaceholder, solvePlaceholder } from "./placeholders.js";
-import { uniqueTypeId } from "./type-id.js";
+import { uniqueTypeId } from "../types/type-id.js";
 import {
   makeForAllType,
   makeFunctionType,
   makeTypeVariable,
   Void,
-} from "./type.js";
+} from "../types/type.js";
 
 describe("applyContext", function () {
   it("leaves void", function () {

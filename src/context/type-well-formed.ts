@@ -3,7 +3,7 @@ import {
   pushTypeVariable,
   cloneContext,
 } from "./context.js";
-import { PlaceholderType, Type, TypeVariable } from "./type.js";
+import { PlaceholderType, Type, TypeVariable } from "../types/type.js";
 
 export function typeWellFormed(context: Context, type: Type): boolean {
   if (type.kind === "variable") {

@@ -1,19 +1,19 @@
-import { applyContext } from "./apply-context.js";
+import { applyContext } from "./context/apply-context.js";
 import { check } from "./check.js";
-import { inChildScope } from "./child-scope.js";
-import { makeAnnotationElement } from "./context-element.js";
+import { inChildScope } from "./context/child-scope.js";
+import { makeAnnotationElement } from "./context/context-element.js";
 import {
   cloneContext,
   commitContext,
   Context,
   findVariableType,
   pushElement,
-} from "./context.js";
-import { Expression } from "./expression.js";
-import { introducePlaceholder } from "./placeholders.js";
+} from "./context/context.js";
+import { Expression } from "./expressions/expression.js";
+import { introducePlaceholder } from "./context/placeholders.js";
 import { synthesizeApplication } from "./synthesize-application.js";
-import { typeWellFormed } from "./type-well-formed.js";
-import { makeFunctionType, Type, Void } from "./type.js";
+import { typeWellFormed } from "./context/type-well-formed.js";
+import { makeFunctionType, Type, Void } from "./types/type.js";
 
 // Determines the type of an expression.
 //

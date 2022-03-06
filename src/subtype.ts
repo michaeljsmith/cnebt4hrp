@@ -1,17 +1,17 @@
-import { applyContext } from "./apply-context.js";
-import { inChildScope } from "./child-scope.js";
-import { makeVariableElement } from "./context-element.js";
+import { applyContext } from "./context/apply-context.js";
+import { inChildScope } from "./context/child-scope.js";
+import { makeVariableElement } from "./context/context-element.js";
 import {
   cloneContext,
   commitContext,
   Context,
   pushElement,
-} from "./context.js";
+} from "./context/context.js";
 import { instantiateSubtype, instantiateSupertype } from "./instantiate.js";
-import { introducePlaceholder } from "./placeholders.js";
-import { substituteTypeReferences } from "./substitute-type-references.js";
-import { typeReferences } from "./type-references.js";
-import { Type } from "./type.js";
+import { introducePlaceholder } from "./context/placeholders.js";
+import { substituteTypeReferences } from "./types/substitute-type-references.js";
+import { typeReferences } from './types/type-references.js';
+import { Type } from "./types/type.js";
 
 // Checks whether one type is a subtype of another.
 //

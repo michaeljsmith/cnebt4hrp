@@ -7,8 +7,8 @@ import {
   placeholderSolution,
   solvePlaceholder,
 } from "./placeholders.js";
-import { uniqueTypeId } from "./type-id.js";
-import { Void } from "./type.js";
+import { uniqueTypeId } from "../types/type-id.js";
+import { Void } from "../types/type.js";
 
 describe("childScope", function () {
   it("returns body result", function () {

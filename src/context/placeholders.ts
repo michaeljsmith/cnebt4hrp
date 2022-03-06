@@ -1,7 +1,7 @@
 import { makePlaceholderElement, PlaceholderElement } from './context-element.js';
 import { Context, pushElement } from "./context.js";
-import { uniqueTypeId } from "./type-id.js";
-import { PlaceholderType, Type } from "./type.js";
+import { uniqueTypeId } from "../types/type-id.js";
+import { PlaceholderType, Type } from "../types/type.js";
 
 export function maybeFindPlaceholderIndex(
   context: Context,

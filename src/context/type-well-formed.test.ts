@@ -6,14 +6,14 @@ import {
   pushPlaceholder,
   solvePlaceholder,
 } from "./placeholders.js";
-import { uniqueTypeId } from "./type-id.js";
+import { uniqueTypeId } from "../types/type-id.js";
 import { typeWellFormed } from "./type-well-formed.js";
 import {
   makeForAllType,
   makeFunctionType,
   makeTypeVariable,
   Void,
-} from "./type.js";
+} from "../types/type.js";
 
 describe("typeWellFormed", function () {
   it("passes Void", function () {

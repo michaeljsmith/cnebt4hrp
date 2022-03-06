@@ -1,19 +1,19 @@
-import { applyContext } from "./apply-context.js";
-import { inChildScope } from "./child-scope.js";
+import { applyContext } from "./context/apply-context.js";
+import { inChildScope } from "./context/child-scope.js";
 import {
   makeAnnotationElement,
   makeVariableElement,
-} from "./context-element.js";
+} from "./context/context-element.js";
 import {
   cloneContext,
   commitContext,
   Context,
   pushElement,
-} from "./context.js";
-import { Expression } from "./expression.js";
+} from "./context/context.js";
+import { Expression } from "./expressions/expression.js";
 import { isSubtype } from "./subtype.js";
 import { synthesize } from "./synthesize.js";
-import { Type } from "./type.js";
+import { Type } from "./types/type.js";
 
 // Checks an expression against a specified type.
 //

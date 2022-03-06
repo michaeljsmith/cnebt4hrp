@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { newPlaceholder } from './placeholders.js';
+import { newPlaceholder } from '../context/placeholders.js';
 import { uniqueTypeId } from "./type-id.js";
 import { typeReferences } from "./type-references.js";
 import {

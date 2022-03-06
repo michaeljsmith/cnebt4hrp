@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { newPlaceholder } from './placeholders.js';
+import { newPlaceholder } from '../context/placeholders.js';
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { uniqueTypeId } from "./type-id.js";
 import { makeForAllType, makeFunctionType, makeTypeVariable, Type, Void } from "./type.js";

@@ -6,7 +6,7 @@ import {
   placeholderSolution,
   solvePlaceholder,
 } from "./placeholders.js";
-import { Void } from "./type.js";
+import { Void } from "../types/type.js";
 
 describe("placeholders", function () {
   it("finds placeholder", function () {

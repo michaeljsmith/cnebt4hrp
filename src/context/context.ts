@@ -1,7 +1,7 @@
-import { BindingId } from "./binding-id.js";
+import { BindingId } from "../expressions/binding-id.js";
 import { ContextElement } from "./context-element.js";
-import { TypeId } from "./type-id.js";
-import { Type } from "./type.js";
+import { TypeId } from "../types/type-id.js";
+import { Type } from "../types/type.js";
 
 export interface Context {
   elements: ContextElement[];

@@ -1,10 +1,10 @@
 import { articulatePlaceholder } from "./articulate.js";
 import { check } from "./check.js";
-import { cloneContext, commitContext, Context } from "./context.js";
-import { Expression } from "./expression.js";
-import { introducePlaceholder } from "./placeholders.js";
-import { substituteTypeReferences } from "./substitute-type-references.js";
-import { Type } from "./type.js";
+import { cloneContext, commitContext, Context } from "./context/context.js";
+import { Expression } from "./expressions/expression.js";
+import { introducePlaceholder } from "./context/placeholders.js";
+import { substituteTypeReferences } from "./types/substitute-type-references.js";
+import { Type } from "./types/type.js";
 
 // Determines the type of a function application.
 //

@@ -1,6 +1,6 @@
-import { BindingId } from './binding-id.js';
-import { TypeId } from "./type-id.js";
-import { Type } from "./type.js";
+import { BindingId } from '../expressions/binding-id.js';
+import { TypeId } from "../types/type-id.js";
+import { Type } from "../types/type.js";
 
 export type ContextElement =
   | VariableElement
