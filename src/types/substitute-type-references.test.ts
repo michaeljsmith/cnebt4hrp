@@ -1,8 +1,7 @@
 import { expect } from "chai";
-import { newPlaceholder } from '../context/placeholders.js';
 import { substituteTypeReferences } from "./substitute-type-references.js";
 import { uniqueTypeId } from "./type-id.js";
-import { makeForAllType, makeFunctionType, makeTypeVariable, Type, Void } from "./type.js";
+import { makeForAllType, makeFunctionType, makeTypeVariable, newPlaceholder, Type, Void } from "./type.js";
 
 describe("subsituteTypeReferences", function () {
   const existingVariableId = uniqueTypeId("foo");

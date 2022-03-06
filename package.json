@@ -33,5 +33,7 @@
     ]
   },
   "dependencies": {},
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "repository": "git@github-personal.com:michaeljsmith/cnebt4hrp.git",
+  "author": "Michael Smith <msmith@msmith.id.au>"
 }

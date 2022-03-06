@@ -1,5 +1,5 @@
-import { applyContext } from "./context/apply-context.js";
 import { articulatePlaceholder } from "./articulate.js";
+import { applyContext } from "./context/apply-context.js";
 import { inChildScope } from "./context/child-scope.js";
 import { makeVariableElement } from "./context/context-element.js";
 import {
@@ -10,13 +10,12 @@ import {
 } from "./context/context.js";
 import {
   findPlaceholderIndex,
-  newPlaceholder,
   placeholderElement,
   solvePlaceholder,
 } from "./context/placeholders.js";
-import { substituteTypeReferences } from "./types/substitute-type-references.js";
 import { typeWellFormed } from "./context/type-well-formed.js";
-import { FunctionType, PlaceholderType, Type } from "./types/type.js";
+import { substituteTypeReferences } from "./types/substitute-type-references.js";
+import { FunctionType, newPlaceholder, PlaceholderType, Type } from "./types/type.js";
 
 // Tries to resolve a placeholder type to a monotype that is well-formed in the context, which is
 // a subtype of the given type.

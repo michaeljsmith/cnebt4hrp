@@ -1,4 +1,4 @@
-import { TypeId } from "./type-id.js";
+import { TypeId, uniqueTypeId } from "./type-id.js";
 
 export type Type =
   | TypeVariable
@@ -30,6 +30,13 @@ export function makeTypeVariable(id: TypeId): TypeVariable {
 
 export interface PlaceholderType extends BaseNamedType {
   readonly kind: "placeholder";
+}
+
+export function newPlaceholder(label: string): PlaceholderType {
+  return {
+    kind: "placeholder",
+    id: uniqueTypeId(label),
+  };
 }
 
 export interface ForAllType {

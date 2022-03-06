@@ -1,11 +1,10 @@
 import { Context } from "./context/context.js";
 import {
   findPlaceholderIndex,
-  newPlaceholder,
   placeholderElement,
   solvePlaceholder,
 } from "./context/placeholders.js";
-import { makeFunctionType, PlaceholderType } from "./types/type.js";
+import { makeFunctionType, newPlaceholder, PlaceholderType } from "./types/type.js";
 
 // Introduces two new placeholders to represent the input and output of a function, and define the
 // given placeholder to be that function type.

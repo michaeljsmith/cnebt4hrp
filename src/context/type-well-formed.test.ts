@@ -2,7 +2,6 @@ import { expect } from "chai";
 import { newContext, pushTypeVariable } from "./context.js";
 import {
   introducePlaceholder,
-  newPlaceholder,
   pushPlaceholder,
   solvePlaceholder,
 } from "./placeholders.js";
@@ -12,6 +11,7 @@ import {
   makeForAllType,
   makeFunctionType,
   makeTypeVariable,
+  newPlaceholder,
   Void,
 } from "../types/type.js";
 

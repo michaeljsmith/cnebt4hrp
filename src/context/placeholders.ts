@@ -1,7 +1,9 @@
-import { makePlaceholderElement, PlaceholderElement } from './context-element.js';
+import { newPlaceholder, PlaceholderType, Type } from "../types/type.js";
+import {
+  makePlaceholderElement,
+  PlaceholderElement,
+} from "./context-element.js";
 import { Context, pushElement } from "./context.js";
-import { uniqueTypeId } from "../types/type-id.js";
-import { PlaceholderType, Type } from "../types/type.js";
 
 export function maybeFindPlaceholderIndex(
   context: Context,
@@ -40,18 +42,16 @@ export function solvePlaceholder(
   };
 }
 
-export function newPlaceholder(label: string): PlaceholderType {
-  return {
-    kind: "placeholder",
-    id: uniqueTypeId(label),
-  };
-}
-
-export function placeholderElement(placeholder: PlaceholderType): PlaceholderElement {
+export function placeholderElement(
+  placeholder: PlaceholderType,
+): PlaceholderElement {
   return makePlaceholderElement(placeholder.id);
 }
 
-export function pushPlaceholder(context: Context, placeholder: PlaceholderType): void {
+export function pushPlaceholder(
+  context: Context,
+  placeholder: PlaceholderType,
+): void {
   pushElement(context, placeholderElement(placeholder));
 }
 

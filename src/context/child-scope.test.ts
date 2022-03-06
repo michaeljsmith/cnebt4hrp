@@ -3,12 +3,11 @@ import { inChildScope } from "./child-scope.js";
 import { makePlaceholderElement } from "./context-element.js";
 import { newContext, pushElement } from "./context.js";
 import {
-  newPlaceholder,
   placeholderSolution,
   solvePlaceholder,
 } from "./placeholders.js";
 import { uniqueTypeId } from "../types/type-id.js";
-import { Void } from "../types/type.js";
+import { newPlaceholder, Void } from "../types/type.js";
 
 describe("childScope", function () {
   it("returns body result", function () {
