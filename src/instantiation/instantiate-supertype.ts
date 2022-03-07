@@ -1,13 +1,8 @@
 import { inChildScope } from "../context/child-scope.js";
-import {
-  cloneContext,
-  commitContext,
-  Context,
-  pushElement,
-} from "../context/context.js";
-import { placeholderElement } from "../context/placeholders.js";
+import { cloneContext, commitContext, Context } from "../context/context.js";
+import { introducePlaceholder } from "../context/placeholders.js";
 import { substituteTypeReferences } from "../types/substitute-type-references.js";
-import { newPlaceholder, PlaceholderType, Type } from "../types/type.js";
+import { PlaceholderType, Type } from "../types/type.js";
 import { instantiateFunction } from "./instantiate-function.js";
 import { maybeInstantiateIfMonotype } from "./instantiate-monotype.js";
 
@@ -36,8 +31,10 @@ export function instantiateSupertype(
     // are discarded at the end of the process. However any changes made to existing placeholders
     // are retained.
     const success = inChildScope(childContext, () => {
-      const childPlaceholder = newPlaceholder(type.quantifiedName.label);
-      pushElement(childContext, placeholderElement(childPlaceholder));
+      const childPlaceholder = introducePlaceholder(
+        childContext,
+        type.quantifiedName.label,
+      );
 
       // Substitute the placeholder for the quantified variable in the quantified expression.
       const updatedBody = substituteTypeReferences(
@@ -46,7 +43,7 @@ export function instantiateSupertype(
         childPlaceholder,
       );
 
-      return instantiateSupertype(childContext, childPlaceholder, updatedBody);
+      return instantiateSupertype(childContext, placeholder, updatedBody);
     });
     if (success) {
       commitContext(context, childContext);
