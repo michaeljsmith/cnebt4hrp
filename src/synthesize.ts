@@ -7,7 +7,7 @@ import { bindType, lookupBindingType } from "./context/type-bindings.js";
 import { typeWellFormed } from "./context/type-well-formed.js";
 import { Expression } from "./expressions/expression.js";
 import { synthesizeApplication } from "./synthesize-application.js";
-import { makeFunctionType, Type, Void } from "./types/type.js";
+import { makeFunctionType, Type, unit } from "./types/type.js";
 
 // Determines the type of an expression.
 //
@@ -18,7 +18,7 @@ export function synthesize(
   expression: Expression,
 ): Type | undefined {
   if (expression.kind === "expression:void") {
-    return Void;
+    return unit;
   } else if (expression.kind === "expression:annotation") {
     // If the expression has a type annotation, check whether the expression checks against that
     // type, and if so return it.

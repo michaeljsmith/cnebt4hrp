@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { uniqueBindingId } from "../expressions/binding-id.js";
-import { Void } from "../types/type.js";
+import { unit } from "../types/type.js";
 import { newContext } from "./context.js";
 import { introducePlaceholder } from "./placeholders.js";
 import { bindType, lookupBindingType } from "./type-bindings.js";
@@ -14,14 +14,14 @@ describe("typeBindings", function () {
   it("finds binding", function () {
     const context = newContext();
     const bindingId = uniqueBindingId("foo");
-    bindType(context, bindingId, Void);
-    expect(lookupBindingType(context, bindingId)).eq(Void);
+    bindType(context, bindingId, unit);
+    expect(lookupBindingType(context, bindingId)).eq(unit);
   });
 
   it("ignores different binding", function () {
     const context = newContext();
     const bindingId = uniqueBindingId("foo");
-    bindType(context, bindingId, Void);
+    bindType(context, bindingId, unit);
     expect(lookupBindingType(context, uniqueBindingId("bar"))).undefined;
   });
 

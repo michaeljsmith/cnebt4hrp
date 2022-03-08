@@ -5,7 +5,7 @@ import {
   makeFunctionType,
   makeTypeVariable,
   newPlaceholder,
-  Void,
+  unit,
 } from "../types/type.js";
 import { newContext } from "./context.js";
 import {
@@ -18,7 +18,7 @@ import { typeWellFormed } from "./type-well-formed.js";
 
 describe("typeWellFormed", function () {
   it("passes Void", function () {
-    expect(typeWellFormed(newContext(), Void)).true;
+    expect(typeWellFormed(newContext(), unit)).true;
   });
 
   it("passes variable in context", function () {
@@ -50,7 +50,7 @@ describe("typeWellFormed", function () {
 
     const context = newContext();
     pushPlaceholder(context, placeholder);
-    solvePlaceholder(context, placeholder, Void);
+    solvePlaceholder(context, placeholder, unit);
     expect(typeWellFormed(context, placeholder)).true;
   });
 
@@ -64,19 +64,19 @@ describe("typeWellFormed", function () {
 
   it("passes function", function () {
     const context = newContext();
-    expect(typeWellFormed(context, makeFunctionType(Void, Void))).true;
+    expect(typeWellFormed(context, makeFunctionType(unit, unit))).true;
   });
 
   it("fails function with ill-formed parameter", function () {
     const context = newContext();
     const illFormed = makeTypeVariable(uniqueTypeId("foo"));
-    expect(typeWellFormed(context, makeFunctionType(illFormed, Void))).false;
+    expect(typeWellFormed(context, makeFunctionType(illFormed, unit))).false;
   });
 
   it("fails function with ill-formed result", function () {
     const context = newContext();
     const illFormed = makeTypeVariable(uniqueTypeId("foo"));
-    expect(typeWellFormed(context, makeFunctionType(Void, illFormed))).false;
+    expect(typeWellFormed(context, makeFunctionType(unit, illFormed))).false;
   });
 
   it("passes forall", function () {

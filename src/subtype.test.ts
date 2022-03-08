@@ -9,21 +9,21 @@ import {
   makeForAllType,
   makeFunctionType,
   newForAllType,
-  Void,
+  unit,
 } from "./types/type.js";
 
 describe("isSubtype", function () {
   it("fails disparate types", function () {
     const context = newContext();
-    const fn = makeFunctionType(Void, Void);
+    const fn = makeFunctionType(unit, unit);
     const initialContext = cloneContext(context);
-    expect(isSubtype(context, Void, fn)).false;
+    expect(isSubtype(context, unit, fn)).false;
     expect(context.elements).deep.eq(initialContext.elements);
   });
 
   it("passes void", function () {
     const context = newContext();
-    expect(isSubtype(context, Void, Void)).true;
+    expect(isSubtype(context, unit, unit)).true;
   });
 
   it("passes identical variables", function () {
@@ -49,21 +49,21 @@ describe("isSubtype", function () {
 
   it("passes matching function", function () {
     const context = newContext();
-    const subType = makeFunctionType(Void, Void);
-    const superType = makeFunctionType(Void, Void);
+    const subType = makeFunctionType(unit, unit);
+    const superType = makeFunctionType(unit, unit);
     expect(isSubtype(context, subType, superType)).true;
   });
 
   it("rejects function and non-function", function () {
     const context = newContext();
-    const subType = makeFunctionType(Void, Void);
-    expect(isSubtype(context, subType, Void)).false;
+    const subType = makeFunctionType(unit, unit);
+    expect(isSubtype(context, subType, unit)).false;
   });
 
   it("rejects parameter contravariantly", function () {
     const context = newContext();
-    const subType = makeFunctionType(smallType, Void);
-    const superType = makeFunctionType(largeType, Void);
+    const subType = makeFunctionType(smallType, unit);
+    const superType = makeFunctionType(largeType, unit);
     const initialContext = cloneContext(context);
     expect(isSubtype(context, subType, superType)).false;
     expect(context.elements).deep.eq(initialContext.elements);
@@ -71,15 +71,15 @@ describe("isSubtype", function () {
 
   it("passes parameter contravariantly", function () {
     const context = newContext();
-    const subType = makeFunctionType(largeType, Void);
-    const superType = makeFunctionType(smallType, Void);
+    const subType = makeFunctionType(largeType, unit);
+    const superType = makeFunctionType(smallType, unit);
     expect(isSubtype(context, subType, superType)).true;
   });
 
   it("rejects result covariantly", function () {
     const context = newContext();
-    const subType = makeFunctionType(Void, largeType);
-    const superType = makeFunctionType(Void, smallType);
+    const subType = makeFunctionType(unit, largeType);
+    const superType = makeFunctionType(unit, smallType);
     const initialContext = cloneContext(context);
     expect(isSubtype(context, subType, superType)).false;
     expect(context.elements).deep.eq(initialContext.elements);
@@ -87,40 +87,40 @@ describe("isSubtype", function () {
 
   it("passes result contravariantly", function () {
     const context = newContext();
-    const subType = makeFunctionType(Void, smallType);
-    const superType = makeFunctionType(Void, largeType);
+    const subType = makeFunctionType(unit, smallType);
+    const superType = makeFunctionType(unit, largeType);
     expect(isSubtype(context, subType, superType)).true;
   });
 
   it("passes trivial forall subtype", function () {
     const context = newContext();
-    const forall = makeForAllType(uniqueTypeId("t"), Void);
-    expect(isSubtype(context, forall, Void)).true;
+    const forall = makeForAllType(uniqueTypeId("t"), unit);
+    expect(isSubtype(context, forall, unit)).true;
   });
 
   it("passes simple forall function subtype", function () {
     const context = newContext();
-    const superType = makeFunctionType(Void, Void);
+    const superType = makeFunctionType(unit, unit);
     const forall = newForAllType("bar", (a) => makeFunctionType(a, a));
     expect(isSubtype(context, forall, superType)).true;
   });
 
   it("rejects mismatching forall body", function () {
     const context = newContext();
-    const forall = makeForAllType(uniqueTypeId("t"), Void);
-    const superType = makeFunctionType(Void, Void);
+    const forall = makeForAllType(uniqueTypeId("t"), unit);
+    const superType = makeFunctionType(unit, unit);
     expect(isSubtype(context, forall, superType)).false;
   });
 
   it("passes trivial forall supertype", function () {
     const context = newContext();
-    const forall = makeForAllType(uniqueTypeId("t"), Void);
-    expect(isSubtype(context, Void, forall)).true;
+    const forall = makeForAllType(uniqueTypeId("t"), unit);
+    expect(isSubtype(context, unit, forall)).true;
   });
 
   it("rejects polymorphic function supertype", function () {
     const context = newContext();
-    const subType = makeFunctionType(Void, Void);
+    const subType = makeFunctionType(unit, unit);
     const forall = newForAllType("bar", (a) => makeFunctionType(a, a));
 
     const initialContext = cloneContext(context);
@@ -157,12 +157,12 @@ describe("isSubtype", function () {
 
   it("rejects differing foralls", function () {
     const context = newContext();
-    const subType = newForAllType("sub", (a) => makeFunctionType(a, Void));
+    const subType = newForAllType("sub", (a) => makeFunctionType(a, unit));
     const superType = newForAllType("super", (b) => makeFunctionType(b, b));
 
     expect(isSubtype(context, subType, superType)).false;
   });
 
-  const largeType = makeFunctionType(Void, Void);
+  const largeType = makeFunctionType(unit, unit);
   const smallType = newForAllType("a", (a) => makeFunctionType(a, a));
 });

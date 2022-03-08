@@ -11,7 +11,7 @@ import {
   makeForAllType,
   makeFunctionType,
   makeTypeVariable,
-  Void,
+  unit,
 } from "../types/type.js";
 import { instantiateSupertype } from "./instantiate-supertype.js";
 
@@ -19,9 +19,9 @@ describe("instantiateSupertype", function () {
   it("instantiates simple type", function () {
     const context = newContext();
     const placeholder = introducePlaceholder(context, "foo");
-    const result = instantiateSupertype(context, placeholder, Void);
+    const result = instantiateSupertype(context, placeholder, unit);
     expect(result).true;
-    expect(placeholderSolution(context, placeholder)).eq(Void);
+    expect(placeholderSolution(context, placeholder)).eq(unit);
   });
 
   it("instantiates function", function () {
@@ -44,9 +44,9 @@ describe("instantiateSupertype", function () {
   it("instantiates to trivial forall", function () {
     const context = newContext();
     const placeholder = introducePlaceholder(context, "foo");
-    const forall = makeForAllType(uniqueTypeId("t"), Void);
+    const forall = makeForAllType(uniqueTypeId("t"), unit);
     expect(instantiateSupertype(context, placeholder, forall)).true;
-    expect(placeholderSolution(context, placeholder)).eq(Void);
+    expect(placeholderSolution(context, placeholder)).eq(unit);
   });
 
   it("cannot instantiate to ill-formed forall", function () {

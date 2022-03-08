@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { Void } from "../types/type.js";
+import { unit } from "../types/type.js";
 import { newContext } from "./context.js";
 import {
   findPlaceholderIndex,
@@ -19,7 +19,7 @@ describe("placeholders", function () {
   it("solves placeholder", function () {
     const context = newContext();
     const placeholder = introducePlaceholder(context, "foo");
-    solvePlaceholder(context, placeholder, Void);
-    expect(placeholderSolution(context, placeholder)).eq(Void);
+    solvePlaceholder(context, placeholder, unit);
+    expect(placeholderSolution(context, placeholder)).eq(unit);
   });
 });
