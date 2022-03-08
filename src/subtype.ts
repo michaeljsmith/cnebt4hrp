@@ -4,7 +4,7 @@ import { cloneContext, commitContext, Context } from "./context/context.js";
 import { introducePlaceholder } from "./context/placeholders.js";
 import { declareTypeVariable } from "./context/type-variables.js";
 import { instantiateSubtype } from "./instantiation/instantiate-subtype.js";
-import { instantiateSupertype } from "./instantiation/instantiate-supertype";
+import { instantiateSupertype } from "./instantiation/instantiate-supertype.js";
 import { substituteTypeReferences } from "./types/substitute-type-references.js";
 import { typeReferences } from "./types/type-references.js";
 import { Type } from "./types/type.js";

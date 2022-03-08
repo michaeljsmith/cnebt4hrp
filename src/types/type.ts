@@ -53,6 +53,16 @@ export function makeForAllType(quantifiedName: TypeId, body: Type): ForAllType {
   };
 }
 
+export function newForAllType(
+  label: string,
+  fn: (quantifiedVariable: TypeVariable) => Type,
+): ForAllType {
+  const quantifiedName = uniqueTypeId(label);
+  const quantifiedVariable = makeTypeVariable(quantifiedName);
+  const universalBody = fn(quantifiedVariable);
+  return makeForAllType(quantifiedName, universalBody);
+}
+
 export interface FunctionType {
   readonly kind: "function";
   readonly parameter: Type;

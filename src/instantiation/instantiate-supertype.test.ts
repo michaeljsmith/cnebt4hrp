@@ -7,7 +7,12 @@ import {
 } from "../context/placeholders.js";
 import { declareTypeVariable } from "../context/type-variables.js";
 import { uniqueTypeId } from "../types/type-id.js";
-import { makeForAllType, makeFunctionType, makeTypeVariable, Void } from "../types/type.js";
+import {
+  makeForAllType,
+  makeFunctionType,
+  makeTypeVariable,
+  Void,
+} from "../types/type.js";
 import { instantiateSupertype } from "./instantiate-supertype.js";
 
 describe("instantiateSupertype", function () {
