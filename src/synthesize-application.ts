@@ -63,6 +63,10 @@ export function synthesizeApplication(
   // two new placeholders to represent them, and then update the placeholder to reference them.
   // We then typecheck against the parameter placeholder. If this succeeds, it will cause the
   // placeholder representing the return type also to be determined.
+  //
+  // NOTE: I honestly don't understand how this code can get called - how do we end up with a
+  // placeholder in the function position? Isn't that an ill-formed type? Something like
+  // `forall a. a 1`?
   if (functionType.kind === "placeholder") {
     const childContext = cloneContext(context);
     const { parameterType, resultType } = articulatePlaceholder(
