@@ -13,6 +13,7 @@ describe("typeBindings", function () {
 
   it("finds binding", function () {
     const context = newContext();
+    introducePlaceholder(context, "a");
     const bindingId = uniqueBindingId("foo");
     bindType(context, bindingId, unit);
     expect(lookupBindingType(context, bindingId)).eq(unit);

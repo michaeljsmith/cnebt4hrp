@@ -1,4 +1,5 @@
-import { BindingId } from "../expressions/binding-id.js";
+import { BindingId, uniqueBindingId } from "../expressions/binding-id.js";
+import { makeReferenceExpression, ReferenceExpression } from '../expressions/expression.js';
 import { Type } from "../types/type.js";
 import { makeAnnotationElement } from "./context-element.js";
 import { Context, pushElement } from "./context.js";
@@ -9,6 +10,16 @@ export function bindType(
   type: Type,
 ): void {
   pushElement(context, makeAnnotationElement(bindingId, type));
+}
+
+export function declareVariableWithType(
+  context: Context,
+  label: string,
+  type: Type,
+): ReferenceExpression {
+  const id = uniqueBindingId(label);
+  bindType(context, id, type);
+  return makeReferenceExpression(id);
 }
 
 export function lookupBindingType(
@@ -22,6 +33,6 @@ export function lookupBindingType(
     ) {
       return element.type;
     }
-    return undefined;
   }
+  return undefined;
 }

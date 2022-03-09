@@ -1,5 +1,5 @@
 import { Type } from "../types/type.js";
-import { BindingId } from "./binding-id.js";
+import { BindingId, uniqueBindingId } from "./binding-id.js";
 
 export type Expression =
   | AnnotationExpression
@@ -58,6 +58,15 @@ export function makeLambda(
     argumentId,
     expression,
   };
+}
+
+export function newLambda(
+  argLabel: string,
+  fn: (arg: Expression) => Expression,
+): LambdaExpression {
+  const bindingId = uniqueBindingId(argLabel);
+  const body = fn(makeReferenceExpression(bindingId));
+  return makeLambda(bindingId, body);
 }
 
 export interface ApplicationExpression {

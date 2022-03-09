@@ -59,3 +59,9 @@ export function instanceOf<T>(): T {
 // Fail
 
 //console.log(f);
+
+
+// Rename expression to term
+// Rename unit to voidType
+// Rename _void to void_
+// Prefix type kinds
