@@ -49,7 +49,7 @@ describe("synthesize", function () {
     assert(type?.kind === "function");
     const parameter = applyContext(context, type.parameter);
     const result = applyContext(context, type.result);
-    assert.equal(parameter, result);
+    expect(parameter).equal(result);
   });
 
   it("cannot synthesize function with non-checking body", function () {
@@ -58,7 +58,7 @@ describe("synthesize", function () {
       context,
       newLambda("x", () => makeReferenceExpression(uniqueBindingId("invalid"))),
     );
-    assert(type === undefined);
+    expect(type).undefined;
   });
 
   it("synthesizes type for identity function application", function () {
@@ -66,20 +66,20 @@ describe("synthesize", function () {
     const fn = newLambda("x", (x) => x);
     const type = synthesize(context, makeApplication(fn, _void));
     assert(type !== undefined);
-    assert.equal(applyContext(context, type), unit);
+    expect(applyContext(context, type)).eq(unit);
   });
 
   it("cannot synthesize type for application with invalid function", function () {
     const context = newContext();
     const fn = makeAnnotationExpression(_void, makeFunctionType(unit, unit));
     const type = synthesize(context, makeApplication(fn, _void));
-    assert(type === undefined);
+    expect(type).undefined;
   });
 
   it("cannot synthesize type for application with non-function", function () {
     const context = newContext();
     const type = synthesize(context, makeApplication(_void, _void));
-    assert(type === undefined);
+    expect(type).undefined;
   });
 
   it("cannot synthesize type for mismatching application", function () {
@@ -88,6 +88,6 @@ describe("synthesize", function () {
     const a = declareTypeVariable(context, uniqueTypeId("a)"));
     const annotatedFn = makeAnnotationExpression(fn, makeFunctionType(a, a));
     const type = synthesize(context, makeApplication(annotatedFn, _void));
-    assert(type === undefined);
+    expect(type).undefined;
   });
 });
