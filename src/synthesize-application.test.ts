@@ -1,3 +1,4 @@
+import { strict as assert } from "assert";
 import { expect } from "chai";
 import { applyContext } from './context/apply-context.js';
 import { newContext } from "./context/context.js";
@@ -13,9 +14,7 @@ describe("synthesizeApplication", function () {
     const context = newContext();
     const fn = makeFunctionType(unit, unit);
     const unappliedType = synthesizeApplication(context, fn, _void);
-    if (unappliedType === undefined) {
-      throw new Error("error");
-    }
+    assert(unappliedType !== undefined);
     expect(applyContext(context, unappliedType)).eq(unit);
   });
 
@@ -30,9 +29,7 @@ describe("synthesizeApplication", function () {
     const context = newContext();
     const fn = newForAllType("a", (a) => makeFunctionType(a, a));
     const unappliedType = synthesizeApplication(context, fn, _void);
-    if (unappliedType === undefined) {
-      throw new Error("error");
-    }
+    assert(unappliedType !== undefined);
     expect(applyContext(context, unappliedType)).eq(unit);
   });
 
@@ -51,15 +48,11 @@ describe("synthesizeApplication", function () {
     // The code should articulate the placeholder (i.e. create placholders `a` and `b` and
     // instantiate the placeholder to `a -> b`). It should instantiate `a` against the argument
     // (of type `void`) and return `b`.
-    if (unappliedResultType === undefined) {
-      throw new Error("error");
-    }
+    assert(unappliedResultType !== undefined);
     const resultType = applyContext(context, unappliedResultType);
     expect(resultType.kind).eq('placeholder');
     const instantiatedFunction = placeholderSolution(context, placeholder);
-    if (instantiatedFunction?.kind !== 'function') {
-      throw new Error("error");
-    }
+    assert(instantiatedFunction?.kind === 'function');
     expect(applyContext(context, instantiatedFunction.parameter)).eq(unit);
   });
 });

@@ -62,6 +62,7 @@ export function instanceOf<T>(): T {
 
 
 // Remove chai
+// Introduce helpers to shorten tests
 // Rename expression to term
 // Rename unit to voidType
 // Rename _void to void_

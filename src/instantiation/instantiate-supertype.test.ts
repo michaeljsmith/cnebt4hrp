@@ -1,3 +1,4 @@
+import { strict as assert } from "assert";
 import { expect } from "chai";
 import { applyContext } from "../context/apply-context.js";
 import { cloneContext, newContext } from "../context/context.js";
@@ -33,9 +34,7 @@ describe("instantiateSupertype", function () {
     const result = instantiateSupertype(context, placeholder, fn);
     expect(result).true;
     const solution = placeholderSolution(context, placeholder);
-    if (solution === undefined) {
-      throw new Error("fail");
-    }
+    assert(solution !== undefined);
     const appliedType = applyContext(context, solution);
 
     expect(appliedType).deep.eq(fn);

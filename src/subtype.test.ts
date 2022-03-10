@@ -1,3 +1,4 @@
+import { strict as assert } from "assert";
 import { expect } from "chai";
 import { applyContext } from "./context/apply-context.js";
 import { cloneContext, newContext } from "./context/context.js";
@@ -140,9 +141,7 @@ describe("isSubtype", function () {
     // are implementing predicative polymorphism, we expect an approximation of that to be `b -> b`
     // where `b` is an unsolved placeholder.
     const instantiatedType = applyContext(context, placeholder);
-    if (instantiatedType.kind !== "function") {
-      throw new Error("Wrong type");
-    }
+    assert(instantiatedType.kind === "function")
     expect(instantiatedType.result).eq(instantiatedType.result);
     expect(instantiatedType.parameter.kind).eq("placeholder");
   });
