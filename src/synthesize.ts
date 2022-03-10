@@ -24,13 +24,13 @@ export function synthesize(
     // type, and if so return it.
     if (!typeWellFormed(context, expression.annotation)) {
       // TODO: Report to user that their annotation is invalid.
-      throw new Error("Ill-formed annotation");
+      return undefined;
     }
 
     const childContext = cloneContext(context);
     if (!check(childContext, expression.annotation, expression.expression)) {
       // TODO: Report error to user.
-      throw new Error("Typecheck error against annotation");
+      return undefined;
     }
 
     commitContext(context, childContext);
@@ -49,7 +49,7 @@ export function synthesize(
     const childContext = cloneContext(context);
     const argumentPlaceholder = introducePlaceholder(
       childContext,
-      expression.argumentId.label,
+      expression.argumentId.label + "-param",
     );
     const resultPlaceholder = introducePlaceholder(
       childContext,

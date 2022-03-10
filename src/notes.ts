@@ -61,7 +61,10 @@ export function instanceOf<T>(): T {
 //console.log(f);
 
 
+// Remove chai
 // Rename expression to term
 // Rename unit to voidType
 // Rename _void to void_
 // Prefix type kinds
+// Add Readme
+// Add licence
