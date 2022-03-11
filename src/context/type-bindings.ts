@@ -1,5 +1,5 @@
-import { BindingId, uniqueBindingId } from "../expressions/binding-id.js";
-import { makeReferenceExpression, ReferenceExpression } from '../expressions/expression.js';
+import { BindingId, uniqueBindingId } from "../terms/binding-id.js";
+import { makeReference, ReferenceTerm } from '../terms/term.js';
 import { Type } from "../types/type.js";
 import { makeAnnotationElement } from "./context-element.js";
 import { Context, pushElement } from "./context.js";
@@ -16,10 +16,10 @@ export function declareVariableWithType(
   context: Context,
   label: string,
   type: Type,
-): ReferenceExpression {
+): ReferenceTerm {
   const id = uniqueBindingId(label);
   bindType(context, id, type);
-  return makeReferenceExpression(id);
+  return makeReference(id);
 }
 
 export function lookupBindingType(

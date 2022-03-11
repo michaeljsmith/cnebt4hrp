@@ -72,7 +72,7 @@ export function isSubtype(
         subType.quantifiedName.label,
       );
 
-      // Substitute the placeholder for the quantified variable in the quantified expression.
+      // Substitute the placeholder for the quantified variable in the quantified term.
       const updatedBody = substituteTypeReferences(
         subType.body,
         subType.quantifiedName,

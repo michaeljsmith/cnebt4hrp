@@ -61,8 +61,6 @@ export function instanceOf<T>(): T {
 //console.log(f);
 
 
-// Introduce helpers to shorten tests
-// Rename expression to term
 // Rename unit to voidType
 // Rename _void to void_
 // Prefix type kinds

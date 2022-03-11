@@ -8,11 +8,11 @@ import {
 import { declareVariableWithType } from "./context/type-bindings.js";
 import { declareTypeVariable } from "./context/type-variables.js";
 import {
-  makeAnnotationExpression,
+  makeAnnotation,
   makeApplication,
   newLambda,
   _void,
-} from "./expressions/expression.js";
+} from "./terms/term.js";
 import { uniqueTypeId } from "./types/type-id.js";
 import { makeFunctionType, newForAllType, unit } from "./types/type.js";
 
@@ -25,40 +25,40 @@ describe("check", function () {
   it("checks against trivial forall", function () {
     const context = newContext();
     const type = newForAllType("a", () => unit);
-    const expression = _void;
-    expect(check(context, type, expression)).true;
+    const term = _void;
+    expect(check(context, type, term)).true;
   });
 
   it("rejects mismatching forall", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = newForAllType("a", () => a);
-    const expression = _void;
-    expect(check(context, type, expression)).false;
+    const term = _void;
+    expect(check(context, type, term)).false;
   });
 
   it("checks simple lambda", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = makeFunctionType(a, a);
-    const expression = newLambda("x", (x) => x);
-    expect(check(context, type, expression)).true;
+    const term = newLambda("x", (x) => x);
+    expect(check(context, type, term)).true;
   });
 
   it("rejects mismatched lambda", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = makeFunctionType(a, a);
-    const expression = newLambda("x", () => _void);
-    expect(check(context, type, expression)).false;
+    const term = newLambda("x", () => _void);
+    expect(check(context, type, term)).false;
   });
 
   it("checks simple lambda, instantiating placeholder", function () {
     const context = newContext();
     const placeholder = introducePlaceholder(context, "a");
     const type = makeFunctionType(unit, placeholder);
-    const expression = newLambda("x", (x) => x);
-    expect(check(context, type, expression)).true;
+    const term = newLambda("x", (x) => x);
+    expect(check(context, type, term)).true;
     expect(placeholderSolution(context, placeholder)).eq(unit);
   });
 
@@ -76,8 +76,8 @@ describe("check", function () {
     const context = newContext();
     const type = newForAllType("T", (T) => makeFunctionType(T, T));
     const fn = newLambda("x", (x) => x);
-    const expressionType = newForAllType("T", (T) => makeFunctionType(T, T));
-    const annotatedFn = makeAnnotationExpression(fn, expressionType);
+    const termType = newForAllType("T", (T) => makeFunctionType(T, T));
+    const annotatedFn = makeAnnotation(fn, termType);
     assert.isTrue(check(context, type, annotatedFn));
   });
 
@@ -86,8 +86,8 @@ describe("check", function () {
     const type = newForAllType("T", (T) => makeFunctionType(T, T));
     const fn = newLambda("x", (x) => x);
     const a = declareTypeVariable(context, uniqueTypeId("a"));
-    const expressionType = makeFunctionType(a, a);
-    const annotatedFn = makeAnnotationExpression(fn, expressionType);
+    const termType = makeFunctionType(a, a);
+    const annotatedFn = makeAnnotation(fn, termType);
     assert.isFalse(check(context, type, annotatedFn));
   });
 
@@ -95,8 +95,8 @@ describe("check", function () {
     const context = newContext();
     const type = newForAllType("T", (T) => makeFunctionType(T, T));
     const fn = newLambda("x", () => _void);
-    const expressionType = newForAllType("T", (T) => makeFunctionType(T, unit));
-    const annotatedFn = makeAnnotationExpression(fn, expressionType);
+    const termType = newForAllType("T", (T) => makeFunctionType(T, unit));
+    const annotatedFn = makeAnnotation(fn, termType);
     assert.isFalse(check(context, type, annotatedFn));
   });
 
@@ -150,7 +150,7 @@ describe("check", function () {
     const annotationType = newForAllType("b", (b) =>
       makeFunctionType(b, makeFunctionType(b, b)),
     );
-    const annotatedFn = makeAnnotationExpression(fn, annotationType);
+    const annotatedFn = makeAnnotation(fn, annotationType);
     assert.isTrue(check(context, type, annotatedFn));
   });
 
@@ -166,7 +166,7 @@ describe("check", function () {
     const annotationType = newForAllType("b", (b) =>
       makeFunctionType(b, makeFunctionType(unit, b)),
     );
-    const annotatedFn = makeAnnotationExpression(fn, annotationType);
+    const annotatedFn = makeAnnotation(fn, annotationType);
     assert.isFalse(check(context, type, annotatedFn));
   });
 
@@ -191,7 +191,7 @@ describe("check", function () {
     const annotationType = newForAllType("b", (b) =>
       makeFunctionType(makeFunctionType(unit, b), b),
     );
-    const annotatedFn = makeAnnotationExpression(fn, annotationType);
+    const annotatedFn = makeAnnotation(fn, annotationType);
     assert.isTrue(check(context, type, annotatedFn));
   });
 
@@ -207,7 +207,7 @@ describe("check", function () {
     const annotationType = newForAllType("b", (b) =>
       makeFunctionType(makeFunctionType(unit, b), b),
     );
-    const annotatedFn = makeAnnotationExpression(fn, annotationType);
+    const annotatedFn = makeAnnotation(fn, annotationType);
     assert.isFalse(check(context, type, annotatedFn));
   });
 });

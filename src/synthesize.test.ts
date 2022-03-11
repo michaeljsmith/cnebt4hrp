@@ -4,14 +4,14 @@ import { applyContext } from "./context/apply-context.js";
 import { newContext } from "./context/context.js";
 import { declareVariableWithType } from "./context/type-bindings.js";
 import { declareTypeVariable } from './context/type-variables.js';
-import { uniqueBindingId } from "./expressions/binding-id.js";
+import { uniqueBindingId } from "./terms/binding-id.js";
 import {
-  makeAnnotationExpression,
+  makeAnnotation,
   makeApplication,
-  makeReferenceExpression,
+  makeReference,
   newLambda,
   _void,
-} from "./expressions/expression.js";
+} from "./terms/term.js";
 import { synthesize } from "./synthesize.js";
 import { uniqueTypeId } from './types/type-id.js';
 import { makeFunctionType, unit } from "./types/type.js";
@@ -30,14 +30,14 @@ describe("synthesize", function () {
 
   it("cannot synthesize for unbound variable", function () {
     const context = newContext();
-    const x = makeReferenceExpression(uniqueBindingId("x"));
+    const x = makeReference(uniqueBindingId("x"));
     expect(synthesize(context, x)).undefined;
   });
 
   it("synthesizes annotated type", function () {
     const context = newContext();
-    const expression = makeAnnotationExpression(_void, unit);
-    expect(synthesize(context, expression)).eq(unit);
+    const term = makeAnnotation(_void, unit);
+    expect(synthesize(context, term)).eq(unit);
   });
 
   it("synthesizes placeholder for identity function", function () {
@@ -56,7 +56,7 @@ describe("synthesize", function () {
     const context = newContext();
     const type = synthesize(
       context,
-      newLambda("x", () => makeReferenceExpression(uniqueBindingId("invalid"))),
+      newLambda("x", () => makeReference(uniqueBindingId("invalid"))),
     );
     expect(type).undefined;
   });
@@ -71,7 +71,7 @@ describe("synthesize", function () {
 
   it("cannot synthesize type for application with invalid function", function () {
     const context = newContext();
-    const fn = makeAnnotationExpression(_void, makeFunctionType(unit, unit));
+    const fn = makeAnnotation(_void, makeFunctionType(unit, unit));
     const type = synthesize(context, makeApplication(fn, _void));
     expect(type).undefined;
   });
@@ -86,7 +86,7 @@ describe("synthesize", function () {
     const context = newContext();
     const fn = newLambda("x", (x) => x);
     const a = declareTypeVariable(context, uniqueTypeId("a)"));
-    const annotatedFn = makeAnnotationExpression(fn, makeFunctionType(a, a));
+    const annotatedFn = makeAnnotation(fn, makeFunctionType(a, a));
     const type = synthesize(context, makeApplication(annotatedFn, _void));
     expect(type).undefined;
   });

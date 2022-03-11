@@ -4,7 +4,7 @@ import { applyContext } from './context/apply-context.js';
 import { newContext } from "./context/context.js";
 import { introducePlaceholder, placeholderSolution } from './context/placeholders.js';
 import { declareTypeVariable } from './context/type-variables.js';
-import { _void } from './expressions/expression.js';
+import { _void } from './terms/term.js';
 import { synthesizeApplication } from './synthesize-application.js';
 import { uniqueTypeId } from './types/type-id.js';
 import { makeFunctionType, newForAllType, unit } from "./types/type.js";

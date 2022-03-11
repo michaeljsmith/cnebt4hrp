@@ -2,7 +2,7 @@ import { articulatePlaceholder } from "./articulate.js";
 import { check } from "./check.js";
 import { cloneContext, commitContext, Context } from "./context/context.js";
 import { introducePlaceholder } from "./context/placeholders.js";
-import { Expression } from "./expressions/expression.js";
+import { Term } from "./terms/term.js";
 import { substituteTypeReferences } from "./types/substitute-type-references.js";
 import { Type } from "./types/type.js";
 
@@ -13,13 +13,13 @@ import { Type } from "./types/type.js";
 export function synthesizeApplication(
   context: Context,
   functionType: Type,
-  expression: Expression,
+  term: Term,
 ): Type | undefined {
   // If the function type is `A -> B`, and the input checks against `A`, then the result is of type
   // `B`.
   if (functionType.kind === "function") {
     const childContext = cloneContext(context);
-    const success = check(childContext, functionType.parameter, expression);
+    const success = check(childContext, functionType.parameter, term);
     if (success) {
       commitContext(context, childContext);
       return functionType.result;
@@ -40,7 +40,7 @@ export function synthesizeApplication(
       functionType.quantifiedName.label,
     );
 
-    // Substitute the placeholder for the quantified variable in the quantified expression.
+    // Substitute the placeholder for the quantified variable in the quantified term.
     const updatedFunctionType = substituteTypeReferences(
       functionType.body,
       functionType.quantifiedName,
@@ -50,7 +50,7 @@ export function synthesizeApplication(
     const resultType = synthesizeApplication(
       childContext,
       updatedFunctionType,
-      expression,
+      term,
     );
     if (resultType !== undefined) {
       commitContext(context, childContext);
@@ -74,9 +74,9 @@ export function synthesizeApplication(
       functionType,
     );
 
-    // Now we check the expression against the parameter type placeholder, and return the second
+    // Now we check the term against the parameter type placeholder, and return the second
     // placeholder as the return type.
-    if (check(childContext, parameterType, expression)) {
+    if (check(childContext, parameterType, term)) {
       commitContext(context, childContext);
       return resultType;
     }

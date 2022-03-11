@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { uniqueBindingId } from "../expressions/binding-id.js";
+import { uniqueBindingId } from "../terms/binding-id.js";
 import { unit } from "../types/type.js";
 import { newContext } from "./context.js";
 import { introducePlaceholder } from "./placeholders.js";

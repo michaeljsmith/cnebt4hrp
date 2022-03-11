@@ -5,42 +5,42 @@ import { cloneContext, commitContext, Context } from "./context/context.js";
 import { introducePlaceholder } from "./context/placeholders.js";
 import { bindType, lookupBindingType } from "./context/type-bindings.js";
 import { typeWellFormed } from "./context/type-well-formed.js";
-import { Expression } from "./expressions/expression.js";
+import { Term } from "./terms/term.js";
 import { synthesizeApplication } from "./synthesize-application.js";
 import { makeFunctionType, Type, unit } from "./types/type.js";
 
-// Determines the type of an expression.
+// Determines the type of an term.
 //
 // If successful, it may also modify the passed-in context to include additional placeholder
 // definitions.
 export function synthesize(
   context: Context,
-  expression: Expression,
+  term: Term,
 ): Type | undefined {
-  if (expression.kind === "expression:void") {
+  if (term.kind === "term:void") {
     return unit;
-  } else if (expression.kind === "expression:annotation") {
-    // If the expression has a type annotation, check whether the expression checks against that
+  } else if (term.kind === "term:annotation") {
+    // If the term has a type annotation, check whether the term checks against that
     // type, and if so return it.
-    if (!typeWellFormed(context, expression.annotation)) {
+    if (!typeWellFormed(context, term.annotation)) {
       // TODO: Report to user that their annotation is invalid.
       return undefined;
     }
 
     const childContext = cloneContext(context);
-    if (!check(childContext, expression.annotation, expression.expression)) {
+    if (!check(childContext, term.annotation, term.term)) {
       // TODO: Report error to user.
       return undefined;
     }
 
     commitContext(context, childContext);
-    return expression.annotation;
-  } else if (expression.kind === "expression:reference") {
-    // If the expression is a reference, check whether the context contains a type for the
+    return term.annotation;
+  } else if (term.kind === "term:reference") {
+    // If the term is a reference, check whether the context contains a type for the
     // variable.
-    return lookupBindingType(context, expression.id);
-  } else if (expression.kind === "expression:lambda") {
-    // If the expression is a lambda, the result will be a function type, but we need to determine
+    return lookupBindingType(context, term.id);
+  } else if (term.kind === "term:lambda") {
+    // If the term is a lambda, the result will be a function type, but we need to determine
     // the argument and result. To do so, we add two new placeholders, as well as an annotation
     // giving the type of the argument. We then typecheck the body of the lambda against the result
     // placeholder, resulting in both the placeholders being instantiated. We then discard the
@@ -49,27 +49,27 @@ export function synthesize(
     const childContext = cloneContext(context);
     const argumentPlaceholder = introducePlaceholder(
       childContext,
-      expression.argumentId.label + "-param",
+      term.argumentId.label + "-param",
     );
     const resultPlaceholder = introducePlaceholder(
       childContext,
-      expression.argumentId.label + "-result",
+      term.argumentId.label + "-result",
     );
     const success = inChildScope(childContext, () => {
-      bindType(childContext, expression.argumentId, argumentPlaceholder);
-      return check(childContext, resultPlaceholder, expression.expression);
+      bindType(childContext, term.argumentId, argumentPlaceholder);
+      return check(childContext, resultPlaceholder, term.term);
     });
     if (success) {
       commitContext(context, childContext);
       return makeFunctionType(argumentPlaceholder, resultPlaceholder);
     }
     return undefined;
-  } else if (expression.kind === "expression:application") {
+  } else if (term.kind === "term:application") {
     const childContext = cloneContext(context);
-    // If the expression is an application, we synthesize the function type, then synthesize the
+    // If the term is an application, we synthesize the function type, then synthesize the
     // result of applying the type, making sure to apply the intermediate context to the types
     // before doing so.
-    const functionType = synthesize(childContext, expression.fn);
+    const functionType = synthesize(childContext, term.fn);
     if (functionType === undefined) {
       return undefined;
     }
@@ -77,7 +77,7 @@ export function synthesize(
     const resultType = synthesizeApplication(
       childContext,
       applyContext(childContext, functionType),
-      expression.arg,
+      term.arg,
     );
 
     if (resultType !== undefined) {
@@ -85,6 +85,6 @@ export function synthesize(
     }
     return resultType;
   } else {
-    throw new Error("Unreachable " + ((x: never) => x)(expression));
+    throw new Error("Unreachable " + ((x: never) => x)(term));
   }
 }
