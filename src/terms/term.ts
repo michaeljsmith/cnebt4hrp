@@ -26,7 +26,7 @@ export interface VoidTerm {
   kind: "term:void";
 }
 
-export const _void: VoidTerm = { kind: "term:void" };
+export const void_: VoidTerm = { kind: "term:void" };
 
 export interface ReferenceTerm {
   kind: "term:reference";

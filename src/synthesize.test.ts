@@ -11,7 +11,7 @@ import {
   makeApplication,
   makeReference,
   newLambda,
-  _void,
+  void_,
 } from "./terms/term.js";
 import { uniqueTypeId } from "./types/type-id.js";
 import { makeFunctionType, voidType } from "./types/type.js";
@@ -19,7 +19,7 @@ import { makeFunctionType, voidType } from "./types/type.js";
 describe("synthesize", function () {
   it("synthesizes void for void", function () {
     const context = newContext();
-    expect(synthesize(context, _void)).eq(voidType);
+    expect(synthesize(context, void_)).eq(voidType);
   });
 
   it("synthesizes value for bound variable", function () {
@@ -36,7 +36,7 @@ describe("synthesize", function () {
 
   it("synthesizes annotated type", function () {
     const context = newContext();
-    const term = makeAnnotation(_void, voidType);
+    const term = makeAnnotation(void_, voidType);
     expect(synthesize(context, term)).eq(voidType);
   });
 
@@ -64,21 +64,21 @@ describe("synthesize", function () {
   it("synthesizes type for identity function application", function () {
     const context = newContext();
     const fn = newLambda("x", (x) => x);
-    const type = synthesize(context, makeApplication(fn, _void));
+    const type = synthesize(context, makeApplication(fn, void_));
     assert(type !== undefined);
     expect(applyContext(context, type)).eq(voidType);
   });
 
   it("cannot synthesize type for application with invalid function", function () {
     const context = newContext();
-    const fn = makeAnnotation(_void, makeFunctionType(voidType, voidType));
-    const type = synthesize(context, makeApplication(fn, _void));
+    const fn = makeAnnotation(void_, makeFunctionType(voidType, voidType));
+    const type = synthesize(context, makeApplication(fn, void_));
     expect(type).undefined;
   });
 
   it("cannot synthesize type for application with non-function", function () {
     const context = newContext();
-    const type = synthesize(context, makeApplication(_void, _void));
+    const type = synthesize(context, makeApplication(void_, void_));
     expect(type).undefined;
   });
 
@@ -87,7 +87,7 @@ describe("synthesize", function () {
     const fn = newLambda("x", (x) => x);
     const a = declareTypeVariable(context, uniqueTypeId("a)"));
     const annotatedFn = makeAnnotation(fn, makeFunctionType(a, a));
-    const type = synthesize(context, makeApplication(annotatedFn, _void));
+    const type = synthesize(context, makeApplication(annotatedFn, void_));
     expect(type).undefined;
   });
 });

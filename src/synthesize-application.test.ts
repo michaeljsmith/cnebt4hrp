@@ -8,7 +8,7 @@ import {
 } from "./context/placeholders.js";
 import { declareTypeVariable } from "./context/type-variables.js";
 import { synthesizeApplication } from "./synthesize-application.js";
-import { _void } from "./terms/term.js";
+import { void_ } from "./terms/term.js";
 import { uniqueTypeId } from "./types/type-id.js";
 import { makeFunctionType, newForAllType, voidType } from "./types/type.js";
 
@@ -16,7 +16,7 @@ describe("synthesizeApplication", function () {
   it("synthesizes function type", function () {
     const context = newContext();
     const fn = makeFunctionType(voidType, voidType);
-    const unappliedType = synthesizeApplication(context, fn, _void);
+    const unappliedType = synthesizeApplication(context, fn, void_);
     assert(unappliedType !== undefined);
     expect(applyContext(context, unappliedType)).eq(voidType);
   });
@@ -25,13 +25,13 @@ describe("synthesizeApplication", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const fn = makeFunctionType(a, voidType);
-    expect(synthesizeApplication(context, fn, _void)).undefined;
+    expect(synthesizeApplication(context, fn, void_)).undefined;
   });
 
   it("synthesizes polymorphic application type", function () {
     const context = newContext();
     const fn = newForAllType("a", (a) => makeFunctionType(a, a));
-    const unappliedType = synthesizeApplication(context, fn, _void);
+    const unappliedType = synthesizeApplication(context, fn, void_);
     assert(unappliedType !== undefined);
     expect(applyContext(context, unappliedType)).eq(voidType);
   });
@@ -40,7 +40,7 @@ describe("synthesizeApplication", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const fn = newForAllType("b", (b) => makeFunctionType(a, b));
-    expect(synthesizeApplication(context, fn, _void)).undefined;
+    expect(synthesizeApplication(context, fn, void_)).undefined;
   });
 
   it("articulates placeholder", function () {
@@ -49,7 +49,7 @@ describe("synthesizeApplication", function () {
     const unappliedResultType = synthesizeApplication(
       context,
       placeholder,
-      _void,
+      void_,
     );
 
     // The code should articulate the placeholder (i.e. create placholders `a` and `b` and

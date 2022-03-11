@@ -11,7 +11,7 @@ import {
   makeAnnotation,
   makeApplication,
   newLambda,
-  _void,
+  void_,
 } from "./terms/term.js";
 import { uniqueTypeId } from "./types/type-id.js";
 import { makeFunctionType, newForAllType, voidType } from "./types/type.js";
@@ -19,13 +19,13 @@ import { makeFunctionType, newForAllType, voidType } from "./types/type.js";
 describe("check", function () {
   it("checks void against void", function () {
     const context = newContext();
-    expect(check(context, voidType, _void)).true;
+    expect(check(context, voidType, void_)).true;
   });
 
   it("checks against trivial forall", function () {
     const context = newContext();
     const type = newForAllType("a", () => voidType);
-    const term = _void;
+    const term = void_;
     expect(check(context, type, term)).true;
   });
 
@@ -33,7 +33,7 @@ describe("check", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = newForAllType("a", () => a);
-    const term = _void;
+    const term = void_;
     expect(check(context, type, term)).false;
   });
 
@@ -49,7 +49,7 @@ describe("check", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = makeFunctionType(a, a);
-    const term = newLambda("x", () => _void);
+    const term = newLambda("x", () => void_);
     expect(check(context, type, term)).false;
   });
 
@@ -94,7 +94,7 @@ describe("check", function () {
   it("rejects incompatible polymorphic function", function () {
     const context = newContext();
     const type = newForAllType("T", (T) => makeFunctionType(T, T));
-    const fn = newLambda("x", () => _void);
+    const fn = newLambda("x", () => void_);
     const termType = newForAllType("T", (T) => makeFunctionType(T, voidType));
     const annotatedFn = makeAnnotation(fn, termType);
     assert.isFalse(check(context, type, annotatedFn));
@@ -114,7 +114,7 @@ describe("check", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = makeFunctionType(a, makeFunctionType(voidType, a));
-    const fn = newLambda("x", () => newLambda("_", () => _void));
+    const fn = newLambda("x", () => newLambda("_", () => void_));
     assert.isFalse(check(context, type, fn));
   });
 
@@ -134,7 +134,7 @@ describe("check", function () {
     const type = newForAllType("a", (a) =>
       makeFunctionType(a, makeFunctionType(a, a)),
     );
-    const fn = newLambda("x", () => newLambda("_", () => _void));
+    const fn = newLambda("x", () => newLambda("_", () => void_));
     assert.isFalse(check(context, type, fn));
   });
 
@@ -175,7 +175,7 @@ describe("check", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = makeFunctionType(makeFunctionType(voidType, a), a);
-    const fn = newLambda("f", (f) => makeApplication(f, _void));
+    const fn = newLambda("f", (f) => makeApplication(f, void_));
     assert.isTrue(check(context, type, fn));
   });
 
@@ -187,7 +187,7 @@ describe("check", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = makeFunctionType(makeFunctionType(voidType, a), a);
-    const fn = newLambda("f", (f) => makeApplication(f, _void));
+    const fn = newLambda("f", (f) => makeApplication(f, void_));
     const annotationType = newForAllType("b", (b) =>
       makeFunctionType(makeFunctionType(voidType, b), b),
     );
@@ -203,7 +203,7 @@ describe("check", function () {
     const context = newContext();
     const a = declareTypeVariable(context, uniqueTypeId("a"));
     const type = makeFunctionType(makeFunctionType(voidType, voidType), a);
-    const fn = newLambda("f", (f) => makeApplication(f, _void));
+    const fn = newLambda("f", (f) => makeApplication(f, void_));
     const annotationType = newForAllType("b", (b) =>
       makeFunctionType(makeFunctionType(voidType, b), b),
     );
