@@ -57,9 +57,9 @@ describe("synthesizeApplication", function () {
     // (of type `void`) and return `b`.
     assert(unappliedResultType !== undefined);
     const resultType = applyContext(context, unappliedResultType);
-    expect(resultType.kind).eq("placeholder");
+    expect(resultType.kind).eq("type:placeholder");
     const instantiatedFunction = placeholderSolution(context, placeholder);
-    assert(instantiatedFunction?.kind === "function");
+    assert(instantiatedFunction?.kind === "type:function");
     expect(applyContext(context, instantiatedFunction.parameter)).eq(voidType);
   });
 });

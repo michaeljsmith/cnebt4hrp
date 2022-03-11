@@ -17,7 +17,7 @@ export function synthesizeApplication(
 ): Type | undefined {
   // If the function type is `A -> B`, and the input checks against `A`, then the result is of type
   // `B`.
-  if (functionType.kind === "function") {
+  if (functionType.kind === "type:function") {
     const childContext = cloneContext(context);
     const success = check(childContext, functionType.parameter, term);
     if (success) {
@@ -30,7 +30,7 @@ export function synthesizeApplication(
   // introduce a placeholder variable to represent the quantified variable and then check against
   // the forall body. Doing so will result in the placeholder variable being instantiated, and
   // the return type will become apparent as a result.
-  if (functionType.kind === "forall") {
+  if (functionType.kind === "type:forall") {
     const childContext = cloneContext(context);
 
     // Unlike other places where placeholders are introduced, we don't discard it once it is
@@ -67,7 +67,7 @@ export function synthesizeApplication(
   // NOTE: I honestly don't understand how this code can get called - how do we end up with a
   // placeholder in the function position? Isn't that an ill-formed type? Something like
   // `forall a. a 1`?
-  if (functionType.kind === "placeholder") {
+  if (functionType.kind === "type:placeholder") {
     const childContext = cloneContext(context);
     const { parameterType, resultType } = articulatePlaceholder(
       childContext,

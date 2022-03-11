@@ -8,46 +8,46 @@ export type Type =
   | FunctionType;
 
 export interface VoidType {
-  readonly kind: "void";
+  readonly kind: "type:void";
 }
 
-export const voidType: VoidType = { kind: "void" };
+export const voidType: VoidType = { kind: "type:void" };
 
 export interface BaseNamedType {
   readonly id: TypeId;
 }
 
 export interface TypeVariable extends BaseNamedType {
-  readonly kind: "variable";
+  readonly kind: "type:variable";
 }
 
 export function makeTypeVariable(id: TypeId): TypeVariable {
   return {
-    kind: "variable",
+    kind: "type:variable",
     id,
   };
 }
 
 export interface PlaceholderType extends BaseNamedType {
-  readonly kind: "placeholder";
+  readonly kind: "type:placeholder";
 }
 
 export function newPlaceholder(label: string): PlaceholderType {
   return {
-    kind: "placeholder",
+    kind: "type:placeholder",
     id: uniqueTypeId(label),
   };
 }
 
 export interface ForAllType {
-  readonly kind: "forall";
+  readonly kind: "type:forall";
   readonly quantifiedName: TypeId;
   readonly body: Type;
 }
 
 export function makeForAllType(quantifiedName: TypeId, body: Type): ForAllType {
   return {
-    kind: "forall",
+    kind: "type:forall",
     quantifiedName,
     body,
   };
@@ -64,14 +64,14 @@ export function newForAllType(
 }
 
 export interface FunctionType {
-  readonly kind: "function";
+  readonly kind: "type:function";
   readonly parameter: Type;
   readonly result: Type;
 }
 
 export function makeFunctionType(parameter: Type, result: Type): FunctionType {
   return {
-    kind: "function",
+    kind: "type:function",
     parameter,
     result,
   };

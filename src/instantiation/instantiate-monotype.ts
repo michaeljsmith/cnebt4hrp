@@ -12,7 +12,7 @@ export function maybeInstantiateIfMonotype(
   type: Type,
 ): boolean {
   // Check whether type is a monotype.
-  if (type.kind !== "forall") {
+  if (type.kind !== "type:forall") {
     // Instantiate placeholders to monotypes directly, if the type is well-formed prior to the
     // definition of the placeholder.
     const childContext = cloneContext(context);
@@ -22,7 +22,7 @@ export function maybeInstantiateIfMonotype(
     if (canInstantiate) {
       solvePlaceholder(context, placeholder, type);
       return true;
-    } else if (type.kind === "placeholder") {
+    } else if (type.kind === "type:placeholder") {
       // We cannot instantiate to the type, because the type is itself a placeholder which is
       // defined *afterwards*. Instead, we define the *type* (which is a placeholder) to be equal
       // to the *placeholder*.

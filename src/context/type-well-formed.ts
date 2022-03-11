@@ -3,18 +3,18 @@ import { cloneContext, Context } from "./context.js";
 import { declareTypeVariable, typeVariableDeclared } from "./type-variables.js";
 
 export function typeWellFormed(context: Context, type: Type): boolean {
-  if (type.kind === "variable") {
+  if (type.kind === "type:variable") {
     return typeVariableDeclared(context, type);
-  } else if (type.kind === "placeholder") {
+  } else if (type.kind === "type:placeholder") {
     return contextContainsPlaceholderType(context, type);
-  } else if (type.kind === "void") {
+  } else if (type.kind === "type:void") {
     return true;
-  } else if (type.kind === "function") {
+  } else if (type.kind === "type:function") {
     return (
       typeWellFormed(context, type.parameter) &&
       typeWellFormed(context, type.result)
     );
-  } else if (type.kind === "forall") {
+  } else if (type.kind === "type:forall") {
     const childContext = cloneContext(context);
     declareTypeVariable(childContext, type.quantifiedName);
     return typeWellFormed(childContext, type.body);

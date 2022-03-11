@@ -20,9 +20,9 @@ export function instantiateSupertype(
     return true;
   }
 
-  if (type.kind === "function") {
+  if (type.kind === "type:function") {
     return instantiateFunction("contravariant", context, placeholder, type);
-  } else if (type.kind === "forall") {
+  } else if (type.kind === "type:forall") {
     const childContext = cloneContext(context);
     // For A to be a supertype of (ForAll b. B), there needs to be at least one value of b for
     // which B < A. To find this value, we declare a new placeholder and instantiate that against B.

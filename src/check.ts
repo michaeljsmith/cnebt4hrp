@@ -14,13 +14,13 @@ import { Type } from "./types/type.js";
 // placeholder definitions.
 export function check(context: Context, type: Type, term: Term): boolean {
   // `void` is of type `void`.
-  if (term.kind === "term:void" && type.kind === "void") {
+  if (term.kind === "term:void" && type.kind === "type:void") {
     return true;
   }
 
   // An term checks against `ForAll a. A` if it checks against `A` after defining `a` in the
   // context.
-  if (type.kind === "forall") {
+  if (type.kind === "type:forall") {
     const childContext = cloneContext(context);
 
     // We enter a special scope to investigate the forall variable. At the end, the newly pushed
@@ -38,7 +38,7 @@ export function check(context: Context, type: Type, term: Term): boolean {
 
   // A lambda checks against a function type `A -> B` if we set the type of the argument to `A` and
   // the term checks against `B`.
-  if (term.kind === "term:lambda" && type.kind === "function") {
+  if (term.kind === "term:lambda" && type.kind === "type:function") {
     const childContext = cloneContext(context);
 
     // We enter a special scope to investigate the body of the lambda. At the end, the newly pushed

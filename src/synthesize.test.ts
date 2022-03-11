@@ -46,7 +46,7 @@ describe("synthesize", function () {
       context,
       newLambda("x", (x) => x),
     );
-    assert(type?.kind === "function");
+    assert(type?.kind === "type:function");
     const parameter = applyContext(context, type.parameter);
     const result = applyContext(context, type.result);
     expect(parameter).equal(result);

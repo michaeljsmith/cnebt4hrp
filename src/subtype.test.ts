@@ -141,9 +141,9 @@ describe("isSubtype", function () {
     // are implementing predicative polymorphism, we expect an approximation of that to be `b -> b`
     // where `b` is an unsolved placeholder.
     const instantiatedType = applyContext(context, placeholder);
-    assert(instantiatedType.kind === "function");
+    assert(instantiatedType.kind === "type:function");
     expect(instantiatedType.result).eq(instantiatedType.result);
-    expect(instantiatedType.parameter.kind).eq("placeholder");
+    expect(instantiatedType.parameter.kind).eq("type:placeholder");
   });
 
   it("passes equivalent foralls", function () {

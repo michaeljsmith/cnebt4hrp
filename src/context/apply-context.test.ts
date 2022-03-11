@@ -50,7 +50,7 @@ describe("applyContext", function () {
     solvePlaceholder(context, placeholder, voidType);
     const forAll = makeForAllType(uniqueTypeId("bar"), placeholder);
     const result = applyContext(context, forAll);
-    expect(result.kind === "forall" && result.body).eq(voidType);
+    expect(result.kind === "type:forall" && result.body).eq(voidType);
   });
 
   it("recurses to function parameter", function () {
@@ -59,7 +59,7 @@ describe("applyContext", function () {
     solvePlaceholder(context, placeholder, voidType);
     const fn = makeFunctionType(placeholder, voidType);
     const result = applyContext(context, fn);
-    expect(result.kind === "function" && result.parameter).eq(voidType);
+    expect(result.kind === "type:function" && result.parameter).eq(voidType);
   });
 
   it("recurses to function result", function () {
@@ -68,6 +68,6 @@ describe("applyContext", function () {
     solvePlaceholder(context, placeholder, voidType);
     const fn = makeFunctionType(voidType, placeholder);
     const result = applyContext(context, fn);
-    expect(result.kind === "function" && result.result).eq(voidType);
+    expect(result.kind === "type:function" && result.result).eq(voidType);
   });
 });

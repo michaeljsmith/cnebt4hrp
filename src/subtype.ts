@@ -18,8 +18,8 @@ export function isSubtype(
   superType: Type,
 ): boolean {
   if (
-    subType.kind === "placeholder" &&
-    superType.kind === "placeholder" &&
+    subType.kind === "type:placeholder" &&
+    superType.kind === "type:placeholder" &&
     subType.id.uniqueId === superType.id.uniqueId
   ) {
     // Placeholders are subtypes of themselves.
@@ -27,20 +27,20 @@ export function isSubtype(
   }
 
   if (
-    subType.kind === "variable" &&
-    superType.kind === "variable" &&
+    subType.kind === "type:variable" &&
+    superType.kind === "type:variable" &&
     subType.id.uniqueId === superType.id.uniqueId
   ) {
     // Variables are subtypes of themselves.
     return true;
   }
 
-  if (subType.kind === "void" && superType.kind === "void") {
+  if (subType.kind === "type:void" && superType.kind === "type:void") {
     // Void is a subtype of itself.
     return true;
   }
 
-  if (subType.kind === "function" && superType.kind === "function") {
+  if (subType.kind === "type:function" && superType.kind === "type:function") {
     const childContext = cloneContext(context);
     // A function type `A1 -> A2` is a subtype of another function type `B1 -> B2` if `B1 < A1`
     // and `A2 < B2`.
@@ -59,7 +59,7 @@ export function isSubtype(
     }
   }
 
-  if (subType.kind === "forall") {
+  if (subType.kind === "type:forall") {
     const childContext = cloneContext(context);
 
     // `ForAll a. A` is a subtype of `B` if there is any `a` for which A < B. To find this `a`, we
@@ -88,7 +88,7 @@ export function isSubtype(
     }
   }
 
-  if (superType.kind === "forall") {
+  if (superType.kind === "type:forall") {
     const childContext = cloneContext(context);
 
     // `A < ForAll b.B` if `A < B` for any value of `b`.
@@ -105,7 +105,10 @@ export function isSubtype(
     }
   }
 
-  if (subType.kind === "placeholder" && !typeReferences(superType, subType)) {
+  if (
+    subType.kind === "type:placeholder" &&
+    !typeReferences(superType, subType)
+  ) {
     const childContext = cloneContext(context);
     if (instantiateSubtype(childContext, subType, superType)) {
       commitContext(context, childContext);
@@ -113,7 +116,10 @@ export function isSubtype(
     }
   }
 
-  if (superType.kind === "placeholder" && !typeReferences(subType, superType)) {
+  if (
+    superType.kind === "type:placeholder" &&
+    !typeReferences(subType, superType)
+  ) {
     const childContext = cloneContext(context);
     if (instantiateSupertype(childContext, superType, subType)) {
       commitContext(context, childContext);

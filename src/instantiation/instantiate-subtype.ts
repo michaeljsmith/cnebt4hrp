@@ -23,9 +23,9 @@ export function instantiateSubtype(
     return true;
   }
 
-  if (type.kind === "function") {
+  if (type.kind === "type:function") {
     return instantiateFunction("covariant", context, placeholder, type);
-  } else if (type.kind === "forall") {
+  } else if (type.kind === "type:forall") {
     const childContext = cloneContext(context);
     // For A to be a subtype of (ForAll b. B), then A needs to be a subtype of B for any value of
     // b.
