@@ -1,4 +1,4 @@
-# Implementation of "Complete and Easy Bidirectional Typechecking for Higher-Rank Polymorphism" by Dunfield and Krishaswami (2013).
+# Implementation of "Complete and Easy Bidirectional Typechecking for Higher-Rank Polymorphism" by Dunfield and Krishnaswami (2013).
 
 See [arXiv:1306.6032](https://arxiv.org/abs/1306.6032)
 
