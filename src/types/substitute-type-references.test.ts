@@ -7,7 +7,7 @@ import {
   makeTypeVariable,
   newPlaceholder,
   Type,
-  unit,
+  voidType,
 } from "./type.js";
 
 describe("subsituteTypeReferences", function () {
@@ -20,8 +20,8 @@ describe("subsituteTypeReferences", function () {
   }
 
   it("ignores void", function () {
-    const result = execute(unit);
-    expect(result).eq(unit);
+    const result = execute(voidType);
+    expect(result).eq(voidType);
   });
 
   it("ignores placeholder", function () {

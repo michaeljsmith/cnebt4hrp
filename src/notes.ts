@@ -60,8 +60,7 @@ export function instanceOf<T>(): T {
 
 //console.log(f);
 
-
-// Rename unit to voidType
+// Rename voidType to voidType
 // Rename _void to void_
 // Prefix type kinds
 // Add Readme

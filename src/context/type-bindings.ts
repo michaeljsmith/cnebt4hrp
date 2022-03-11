@@ -1,5 +1,5 @@
 import { BindingId, uniqueBindingId } from "../terms/binding-id.js";
-import { makeReference, ReferenceTerm } from '../terms/term.js';
+import { makeReference, ReferenceTerm } from "../terms/term.js";
 import { Type } from "../types/type.js";
 import { makeAnnotationElement } from "./context-element.js";
 import { Context, pushElement } from "./context.js";

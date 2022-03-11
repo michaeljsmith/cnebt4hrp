@@ -6,12 +6,12 @@ import {
   makeFunctionType,
   makeTypeVariable,
   newPlaceholder,
-  unit,
+  voidType,
 } from "./type.js";
 
 describe("typeReferences", function () {
   it("finds no references in void", function () {
-    expect(typeReferences(unit, newPlaceholder("foo"))).false;
+    expect(typeReferences(voidType, newPlaceholder("foo"))).false;
   });
 
   it("finds no references in variable", function () {
@@ -30,13 +30,13 @@ describe("typeReferences", function () {
 
   it("recurses to function parameter", function () {
     const placeholder = newPlaceholder("foo");
-    expect(typeReferences(makeFunctionType(placeholder, unit), placeholder))
+    expect(typeReferences(makeFunctionType(placeholder, voidType), placeholder))
       .true;
   });
 
   it("recurses to function result", function () {
     const placeholder = newPlaceholder("foo");
-    expect(typeReferences(makeFunctionType(unit, placeholder), placeholder))
+    expect(typeReferences(makeFunctionType(voidType, placeholder), placeholder))
       .true;
   });
 

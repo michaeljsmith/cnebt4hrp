@@ -11,7 +11,7 @@ export interface VoidType {
   readonly kind: "void";
 }
 
-export const unit: VoidType = { kind: "void" };
+export const voidType: VoidType = { kind: "void" };
 
 export interface BaseNamedType {
   readonly id: TypeId;

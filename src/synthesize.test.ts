@@ -3,7 +3,8 @@ import { expect } from "chai";
 import { applyContext } from "./context/apply-context.js";
 import { newContext } from "./context/context.js";
 import { declareVariableWithType } from "./context/type-bindings.js";
-import { declareTypeVariable } from './context/type-variables.js';
+import { declareTypeVariable } from "./context/type-variables.js";
+import { synthesize } from "./synthesize.js";
 import { uniqueBindingId } from "./terms/binding-id.js";
 import {
   makeAnnotation,
@@ -12,20 +13,19 @@ import {
   newLambda,
   _void,
 } from "./terms/term.js";
-import { synthesize } from "./synthesize.js";
-import { uniqueTypeId } from './types/type-id.js';
-import { makeFunctionType, unit } from "./types/type.js";
+import { uniqueTypeId } from "./types/type-id.js";
+import { makeFunctionType, voidType } from "./types/type.js";
 
 describe("synthesize", function () {
   it("synthesizes void for void", function () {
     const context = newContext();
-    expect(synthesize(context, _void)).eq(unit);
+    expect(synthesize(context, _void)).eq(voidType);
   });
 
   it("synthesizes value for bound variable", function () {
     const context = newContext();
-    const x = declareVariableWithType(context, "x", unit);
-    expect(synthesize(context, x)).eq(unit);
+    const x = declareVariableWithType(context, "x", voidType);
+    expect(synthesize(context, x)).eq(voidType);
   });
 
   it("cannot synthesize for unbound variable", function () {
@@ -36,8 +36,8 @@ describe("synthesize", function () {
 
   it("synthesizes annotated type", function () {
     const context = newContext();
-    const term = makeAnnotation(_void, unit);
-    expect(synthesize(context, term)).eq(unit);
+    const term = makeAnnotation(_void, voidType);
+    expect(synthesize(context, term)).eq(voidType);
   });
 
   it("synthesizes placeholder for identity function", function () {
@@ -66,12 +66,12 @@ describe("synthesize", function () {
     const fn = newLambda("x", (x) => x);
     const type = synthesize(context, makeApplication(fn, _void));
     assert(type !== undefined);
-    expect(applyContext(context, type)).eq(unit);
+    expect(applyContext(context, type)).eq(voidType);
   });
 
   it("cannot synthesize type for application with invalid function", function () {
     const context = newContext();
-    const fn = makeAnnotation(_void, makeFunctionType(unit, unit));
+    const fn = makeAnnotation(_void, makeFunctionType(voidType, voidType));
     const type = synthesize(context, makeApplication(fn, _void));
     expect(type).undefined;
   });

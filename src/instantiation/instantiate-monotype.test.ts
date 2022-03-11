@@ -6,7 +6,7 @@ import {
 } from "../context/placeholders.js";
 import { declareTypeVariable } from "../context/type-variables.js";
 import { uniqueTypeId } from "../types/type-id.js";
-import { makeForAllType, makeFunctionType, unit } from "../types/type.js";
+import { makeForAllType, makeFunctionType, voidType } from "../types/type.js";
 import { maybeInstantiateIfMonotype } from "./instantiate-monotype.js";
 
 describe("instantiateMonotype", function () {
@@ -16,7 +16,7 @@ describe("instantiateMonotype", function () {
     const result = maybeInstantiateIfMonotype(
       context,
       placeholder,
-      makeForAllType(uniqueTypeId("bar"), unit),
+      makeForAllType(uniqueTypeId("bar"), voidType),
     );
     expect(result).false;
   });
@@ -24,9 +24,9 @@ describe("instantiateMonotype", function () {
   it("instantiates to simple type", function () {
     const context = newContext();
     const placeholder = introducePlaceholder(context, "foo");
-    const result = maybeInstantiateIfMonotype(context, placeholder, unit);
+    const result = maybeInstantiateIfMonotype(context, placeholder, voidType);
     expect(result).true;
-    expect(placeholderSolution(context, placeholder)).eq(unit);
+    expect(placeholderSolution(context, placeholder)).eq(voidType);
   });
 
   it("instantiates to complex but well-formed type", function () {

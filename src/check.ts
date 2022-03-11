@@ -3,20 +3,16 @@ import { inChildScope } from "./context/child-scope.js";
 import { cloneContext, commitContext, Context } from "./context/context.js";
 import { bindType } from "./context/type-bindings.js";
 import { declareTypeVariable } from "./context/type-variables.js";
-import { Term } from "./terms/term.js";
 import { isSubtype } from "./subtype.js";
 import { synthesize } from "./synthesize.js";
+import { Term } from "./terms/term.js";
 import { Type } from "./types/type.js";
 
 // Checks a term against a specified type.
 //
 // If the term checks, it may also modify the passed-in context to include additional
 // placeholder definitions.
-export function check(
-  context: Context,
-  type: Type,
-  term: Term,
-): boolean {
+export function check(context: Context, type: Type, term: Term): boolean {
   // `void` is of type `void`.
   if (term.kind === "term:void" && type.kind === "void") {
     return true;

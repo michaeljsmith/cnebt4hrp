@@ -12,7 +12,7 @@ import {
   makeForAllType,
   makeFunctionType,
   makeTypeVariable,
-  unit,
+  voidType,
 } from "../types/type.js";
 import { instantiateSubtype } from "./instantiate-subtype.js";
 
@@ -20,9 +20,9 @@ describe("instantiateSubtype", function () {
   it("instantiates simple type", function () {
     const context = newContext();
     const placeholder = introducePlaceholder(context, "foo");
-    const result = instantiateSubtype(context, placeholder, unit);
+    const result = instantiateSubtype(context, placeholder, voidType);
     expect(result).true;
-    expect(placeholderSolution(context, placeholder)).eq(unit);
+    expect(placeholderSolution(context, placeholder)).eq(voidType);
   });
 
   it("instantiates function", function () {
@@ -44,9 +44,9 @@ describe("instantiateSubtype", function () {
     const context = newContext();
     const placeholder = introducePlaceholder(context, "foo");
     const quantifiedName = uniqueTypeId("t");
-    const forall = makeForAllType(quantifiedName, unit);
+    const forall = makeForAllType(quantifiedName, voidType);
     expect(instantiateSubtype(context, placeholder, forall)).true;
-    expect(placeholderSolution(context, placeholder)).eq(unit);
+    expect(placeholderSolution(context, placeholder)).eq(voidType);
   });
 
   it("cannot instantiate to general function", function () {
